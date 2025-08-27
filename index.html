@@ -34,7 +34,7 @@
             >
               {{quizCtrl.result ? 'Correct!' : 'Incorrect!'}}
             </p>
-            <p ng-if="!quizCtrl.result">
+            <p>
               Possible answers: {{quizCtrl.currentQuestion.answers.join(', ')}}
             </p>
             <button
