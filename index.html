@@ -10,7 +10,11 @@
   </head>
   <body ng-controller="QuizController as quizCtrl">
     <div class="container">
-      <h1>US Citizenship Quiz</h1>
+      <header class="header">
+        <div class="header-content">
+          <img src="images/logo2.svg" alt="Logo" class="logo" />
+        </div>
+      </header>
       <div ng-if="!quizCtrl.started">
         <button ng-click="quizCtrl.startQuiz()">Start Quiz</button>
         <button ng-click="quizCtrl.startQuizAll()">Quiz All Questions</button>
