@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body ng-controller="QuizController as quizCtrl">
+    <div class="container">
+      <h1>US Citizenship Quiz</h1>
+      <div ng-if="!quizCtrl.started">
+        <button ng-click="quizCtrl.startQuiz()">Start Quiz</button>
+        <button ng-click="quizCtrl.startQuizAll()">Quiz All Questions</button>
+      </div>
+      <div ng-if="quizCtrl.started && !quizCtrl.finished">
+        <div class="wizard">
+          <h2>
+            Question {{quizCtrl.currentIndex + 1}} of
+            {{quizCtrl.questions.length}}
+          </h2>
+          <p>{{quizCtrl.currentQuestion.question}}</p>
+          <input
+            type="text"
+            ng-model="quizCtrl.userAnswer"
+            placeholder="Your answer..."
+          />
+          <button ng-click="quizCtrl.submitAnswer()">Submit</button>
+          <div ng-if="quizCtrl.result !== null">
+            <p
+              ng-class="{'correct': quizCtrl.result, 'incorrect': !quizCtrl.result}"
+            >
+              {{quizCtrl.result ? 'Correct!' : 'Incorrect!'}}
+            </p>
+            <p ng-if="!quizCtrl.result">
+              Possible answers: {{quizCtrl.currentQuestion.answers.join(', ')}}
+            </p>
+            <button
+              ng-click="quizCtrl.nextQuestion()"
+              ng-if="quizCtrl.result !== null"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+      <div ng-if="quizCtrl.finished">
+        <h2>Quiz Finished!</h2>
+        <p>Your score: {{quizCtrl.score}} / {{quizCtrl.questions.length}}</p>
+        <button ng-click="quizCtrl.restartQuiz()">Restart Quiz</button>
+      </div>
+    </div>
+  </body>
+</html>
