@@ -120,7 +120,8 @@
       },
       {
         "question": "Who is one of your state’s U.S. Senators now?",
-        "answers": ["Mark Kelly", "Ruben Gallego"]
+        "answers": ["Mark Kelly", "Ruben Gallego"],
+        "disclaimer": "as of Aug 2025, senators vary by state. refer https://www.senate.gov/senators/index.htm for your senator"
       },
       {
         "question": "The House of Representatives has how many voting members?",
@@ -132,7 +133,8 @@
       },
       {
         "question": "Name your U.S. Representative.",
-        "answers": ["Andy Biggs"]
+        "answers": ["Andy Biggs"],
+        "disclaimer": "as of Aug 2025, US Representatives vary by congressional district. https://www.house.gov/representatives"
       },
       {
         "question": "Who does a U.S. Senator represent?",
@@ -156,11 +158,13 @@
       },
       {
         "question": "What is the name of the President of the United States now?",
-        "answers": ["Donald J. Trump"]
+        "answers": ["Donald J. Trump"],
+        "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://www.whitehouse.gov/administration"
       },
       {
         "question": "What is the name of the Vice President of the United States now?",
-        "answers": ["J.D. Vance"]
+        "answers": ["J.D. Vance"],
+        "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://www.whitehouse.gov/administration"
       },
       {
         "question": "If the President can no longer serve, who becomes President?",
@@ -226,7 +230,8 @@
       },
       {
         "question": "Who is the Chief Justice of the United States now?",
-        "answers": ["The Honorable John G. Roberts, Jr."]
+        "answers": ["John G. Roberts, Jr."],
+        "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://www.supremecourt.gov/about/biographies.aspx"
       },
       {
         "question": "Under our Constitution, some powers belong to the federal government. What is one power of the federal government?",
@@ -249,11 +254,13 @@
       },
       {
         "question": "Who is the Governor of your state now?",
-        "answers": ["Katie Hobbs"]
+        "answers": ["Katie Hobbs"],
+        "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://azgovernor.gov/"
       },
       {
         "question": "What is the capital of your state?",
-        "answers": ["Phoenix"]
+        "answers": ["Phoenix"],
+        "disclaimer": "US capitals vary by state. refer https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals for your state capital"
       },
       {
         "question": "What are the two major political parties in the United States?",
@@ -265,7 +272,8 @@
       },
       {
         "question": "What is the name of the Speaker of the House of Representatives now?",
-        "answers": ["Mike Johnson"]
+        "answers": ["Mike Johnson"],
+        "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://www.house.gov/leadership"
       }
     ]
   },

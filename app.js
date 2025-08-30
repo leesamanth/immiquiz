@@ -46,6 +46,70 @@
   }; */
 angular.module("quizApp", []).controller("QuizController", function ($http) {
   var vm = this;
+  vm.flashFlipping = false;
+  // Flash cards feature
+  vm.flashMode = false;
+  vm.flashCards = [];
+  vm.flashIndex = 0;
+  vm.flashAnswerRevealed = false;
+
+  vm.startFlashCards = function () {
+    if (!vm.allQuestions || vm.allQuestions.length < 1) {
+      alert("Questions not loaded yet. Please wait and try again.");
+      return;
+    }
+    vm.flashMode = true;
+    vm.flashAnswerRevealed = false;
+    // Shuffle and pick 100 questions
+    var shuffled = vm.allQuestions.slice();
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = shuffled[i];
+      shuffled[i] = shuffled[j];
+      shuffled[j] = temp;
+    }
+    vm.flashCards = shuffled.slice(0, 100);
+    vm.flashIndex = 0;
+  };
+
+  vm.revealFlashAnswer = function () {
+    vm.flashAnswerRevealed = true;
+  };
+
+  vm.nextFlashCard = function () {
+    vm.flashFlipping = true;
+    setTimeout(function () {
+      vm.flashAnswerRevealed = false;
+      vm.flashIndex++;
+      if (vm.flashIndex >= vm.flashCards.length) {
+        vm.flashIndex = 0;
+      }
+      vm.flashFlipping = false;
+      if (!vm.$$phase && !$http.$$phase) {
+        var el = document.querySelector("[ng-controller]");
+        if (el && window.angular) {
+          window.angular.element(el).scope().$apply();
+        }
+      }
+    }, 400); // 400ms shuffle animation duration
+  };
+
+  // On card click: reveal answer if not revealed, else go to next card
+  vm.flashCardClick = function () {
+    if (!vm.flashAnswerRevealed) {
+      vm.revealFlashAnswer();
+    } else {
+      vm.nextFlashCard();
+    }
+  };
+
+  vm.exitFlashCards = function () {
+    vm.flashMode = false;
+    vm.flashCards = [];
+    vm.flashIndex = 0;
+    vm.flashAnswerRevealed = false;
+  };
+  var vm = this;
   vm.started = false;
   vm.finished = false;
   vm.currentIndex = 0;
@@ -53,6 +117,20 @@ angular.module("quizApp", []).controller("QuizController", function ($http) {
   vm.result = null;
   vm.userAnswer = "";
   vm.questions = [];
+  vm.exclude = [
+    "a",
+    "an",
+    "the",
+    "this",
+    "and",
+    "was",
+    "is",
+    "of",
+    "by",
+    "for",
+    "your",
+    "if",
+  ];
 
   // Load all questions from questions.json
   vm.allQuestions = [];
@@ -69,7 +147,7 @@ angular.module("quizApp", []).controller("QuizController", function ($http) {
   });
 
   vm.startQuiz = function () {
-    if (!vm.allQuestions || vm.allQuestions.length < 6) {
+    if (!vm.allQuestions || vm.allQuestions.length < 10) {
       alert("Questions not loaded yet. Please wait and try again.");
       return;
     }
@@ -79,10 +157,10 @@ angular.module("quizApp", []).controller("QuizController", function ($http) {
     vm.currentIndex = 0;
     vm.result = null;
     vm.userAnswer = "";
-    // Randomly select 6 questions from all loaded
+    // Randomly select 10 questions from all loaded
     vm.questions = [];
     var used = {};
-    while (vm.questions.length < 6) {
+    while (vm.questions.length < 10) {
       var idx = Math.floor(Math.random() * vm.allQuestions.length);
       if (!used[idx]) {
         vm.questions.push(vm.allQuestions[idx]);
@@ -141,25 +219,74 @@ angular.module("quizApp", []).controller("QuizController", function ($http) {
     return matrix[b.length][a.length];
   }
 
+  function extractKeywords(sentence) {
+    return sentence
+      .toLowerCase()
+      .split(/\W+/)
+      .filter((word) => word && !exclude.includes(word));
+  }
+
   // Consider a match if Levenshtein distance is <= 2 or answer is contained in correct answer
+
   vm.submitAnswer = function () {
     if (!vm.userAnswer) return;
     var answer = vm.userAnswer.trim().toLowerCase();
+    //var ansKeywords = extractKeywords(answer);
+    /* var answerAcceptable = true;
+    vm.currentQuestion.answers.forEach((anAns) => {
+      var elementKeywords = extractKeywords(anAns);
+      // check if the length of the answer is equal to the smallest keyword length
+      var minLength = Math.min(...elementKeywords.map((kw) => kw.length));
+      if (answer.length === minLength) {
+        answerAcceptable = false;
+        return false;
+      }
+    }); */
     var correct = vm.currentQuestion.answers.some(function (ans) {
       var ansNorm = ans.trim().toLowerCase();
+      // remove words enclosed in () from ansNorm if the word is not a number
+      ansNorm = ansNorm.replace(/\((?!\d+\))[^)]+\)/g, "").trim();
+
       var dist = levenshtein(answer, ansNorm);
-      return (
-        dist <= 2 ||
-        ansNorm.indexOf(answer) !== -1 ||
-        answer.indexOf(ansNorm) !== -1
-      );
+      console.log("Comparing:", answer, "with:", ansNorm, "Distance:", dist);
+      return dist <= 2;
     });
+    // if atleast 2 words from the answer matches with any 2 words in the listed answers after removing function words consider the response correct
+    if (!correct) {
+      console.log("Checking for partial matches...");
+      vm.currentQuestion.answers.some(function (ans) {
+        var ansNorm = ans.trim().toLowerCase();
+        console.log("Partial match check with:", ansNorm);
+        var answerWords = answer.split(/\W+/).filter(Boolean);
+        //remove function words from answerWords
+        answerWords = answerWords.filter(function (word) {
+          return !vm.exclude.includes(word);
+        });
+        var matchingWords = 0;
+        answerWords.forEach(function (word) {
+          if (ansNorm.includes(word)) {
+            matchingWords++;
+            console.log("Found matching word:", word);
+          }
+        });
+        if (matchingWords >= 2) {
+          correct = true;
+        }
+      });
+    }
+
     vm.result = correct;
     // Only score if correct and not already scored for this question
     if (correct && typeof vm.answeredCorrectly === "undefined") {
       vm.score++;
       vm.answeredCorrectly = true;
     }
+  };
+
+  // Skip question: counts as failed (does not increment score)
+  vm.skipQuestion = function () {
+    vm.result = false;
+    vm.answeredCorrectly = false;
   };
 
   vm.nextQuestion = function () {
