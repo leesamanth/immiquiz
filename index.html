@@ -3,8 +3,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quiz Landing Page</title>
+    <title>US Citizenship Quiz - Practice Questions & Flashcards</title>
+    <meta
+      name="description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="keywords"
+      content="US citizenship, quiz, flashcards, naturalization, practice test, immigration, civics, questions, answers"
+    />
+    <meta name="author" content="immiquiz.com" />
+    <meta
+      property="og:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      property="og:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://immiquiz.com/" />
+    <meta property="og:image" content="https://immiquiz.com/images/logo2.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      name="twitter:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="twitter:image"
+      content="https://immiquiz.com/images/logo2.svg"
+    />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DZ4QLE2QX7"
+    ></script>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -99,13 +137,19 @@
                 </a>
               </li>
               <li>
-                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                <a
+                  href="about.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
                   About
                 </a>
               </li>
               <li>
-                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
-                  Contact
+                <a
+                  href="store.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  Store
                 </a>
               </li>
             </ul>
@@ -154,6 +198,15 @@
             }
           };
         });
+    </script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-DZ4QLE2QX7");
     </script>
   </body>
 </html>
