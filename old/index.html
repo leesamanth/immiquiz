@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz App</title>
+    <!-- Tailwind CSS CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+  </head>
+  <body ng-controller="QuizController as quizCtrl">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-8">
+      <header
+        class="flex flex-col sm:flex-row items-center justify-between mb-8"
+      >
+        <div class="flex items-center gap-4">
+          <img src="images/logo2.svg" alt="Logo" class="logo" />
+        </div>
+      </header>
+      <div
+        ng-if="!quizCtrl.started && !quizCtrl.flashMode"
+        class="flex flex-col sm:flex-row gap-4 mb-8 justify-center"
+      >
+        <button
+          ng-click="quizCtrl.startQuiz()"
+          class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
+        >
+          Quiz 10 Questions
+        </button>
+        <button
+          ng-click="quizCtrl.startQuizAll()"
+          class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700 transition"
+        >
+          Quiz All Questions
+        </button>
+        <button
+          ng-click="quizCtrl.startFlashCards()"
+          class="bg-yellow-500 text-white px-6 py-2 rounded shadow hover:bg-yellow-600 transition"
+        >
+          Flash cards
+        </button>
+      </div>
+      <div ng-if="quizCtrl.flashMode">
+        <div
+          class="relative mx-auto max-w-md bg-blue-100 rounded-xl shadow-lg p-8 mb-6 transition-transform duration-500"
+          ng-class="{ 'flashcard-flip': quizCtrl.flashFlipping }"
+          style="transform-style: preserve-3d"
+        >
+          <h2 class="text-lg font-semibold text-gray-700 mb-4 text-center">
+            Flash Card {{quizCtrl.flashIndex + 1}} /
+            {{quizCtrl.flashCards.length}}
+          </h2>
+          <div
+            class="text-xl text-center py-6 cursor-pointer"
+            ng-click="quizCtrl.revealFlashAnswer()"
+          >
+            <span ng-if="!quizCtrl.flashAnswerRevealed"
+              >{{quizCtrl.flashCards[quizCtrl.flashIndex].question}}</span
+            >
+            <span ng-if="quizCtrl.flashAnswerRevealed">
+              <strong>Q:</strong>
+              {{quizCtrl.flashCards[quizCtrl.flashIndex].question}}<br /><br />
+              <strong>A:</strong>
+              {{quizCtrl.flashCards[quizCtrl.flashIndex].answers.join(', ')}}
+              <div
+                ng-if="quizCtrl.flashCards[quizCtrl.flashIndex].disclaimer"
+                class="text-xs text-gray-500 italic mt-2"
+              >
+                <strong>Disclaimer:</strong>
+                {{quizCtrl.flashCards[quizCtrl.flashIndex].disclaimer}}
+              </div>
+            </span>
+          </div>
+          <button
+            ng-click="quizCtrl.revealFlashAnswer()"
+            ng-if="!quizCtrl.flashAnswerRevealed"
+            class="block mx-auto mt-4 bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
+          >
+            Answer
+          </button>
+        </div>
+        <div class="flex gap-4 justify-center mb-8">
+          <button
+            ng-click="quizCtrl.nextFlashCard()"
+            class="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 transition"
+          >
+            Next
+          </button>
+          <button
+            ng-click="quizCtrl.exitFlashCards()"
+            class="bg-gray-400 text-white px-6 py-2 rounded shadow hover:bg-gray-500 transition"
+          >
+            Exit
+          </button>
+        </div>
+      </div>
+      <div ng-if="quizCtrl.started && !quizCtrl.finished">
+        <div class="bg-gray-50 rounded-lg shadow p-6 mb-8">
+          <h2 class="text-lg font-semibold text-gray-700 mb-4">
+            Question {{quizCtrl.currentIndex + 1}} of
+            {{quizCtrl.questions.length}}
+          </h2>
+          <p class="text-xl mb-4">{{quizCtrl.currentQuestion.question}}</p>
+          <input
+            type="text"
+            ng-model="quizCtrl.userAnswer"
+            placeholder="Your answer..."
+            class="w-full border border-gray-300 rounded px-4 py-2 mb-4"
+          />
+          <div class="flex gap-4 mb-4">
+            <button
+              ng-click="quizCtrl.submitAnswer()"
+              class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
+              ng-if="quizCtrl.result === null"
+            >
+              Submit
+            </button>
+            <button
+              ng-click="quizCtrl.skipQuestion()"
+              class="bg-yellow-500 text-white px-6 py-2 rounded shadow hover:bg-yellow-600 transition"
+              ng-if="quizCtrl.result === null"
+            >
+              Skip
+            </button>
+          </div>
+          <div ng-if="quizCtrl.result !== null">
+            <p
+              ng-class="{'text-green-600 font-bold': quizCtrl.result, 'text-red-600 font-bold': !quizCtrl.result}"
+              class="mb-2"
+            >
+              {{quizCtrl.result ? 'Correct!' : 'Incorrect!'}}
+            </p>
+            <div class="mb-2">
+              <span class="font-semibold">Possible answers:</span>
+              <ul class="list-disc pl-6">
+                <li
+                  ng-repeat="ans in quizCtrl.currentQuestion.answers"
+                  class="text-blue-700"
+                >
+                  {{ans}}
+                </li>
+              </ul>
+              <div
+                ng-if="quizCtrl.currentQuestion.disclaimer"
+                class="text-xs text-gray-500 italic mt-2"
+              >
+                <strong>Disclaimer:</strong>
+                {{quizCtrl.currentQuestion.disclaimer}}
+              </div>
+            </div>
+            <button
+              ng-click="quizCtrl.nextQuestion()"
+              class="bg-blue-500 text-white px-6 py-2 rounded shadow hover:bg-blue-600 transition"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+      <div ng-if="quizCtrl.finished" class="text-center mt-8">
+        <h2 class="text-2xl font-bold text-green-700 mb-4">Quiz Finished!</h2>
+        <p class="text-lg mb-4">
+          Your score: {{quizCtrl.score}} / {{quizCtrl.questions.length}}
+        </p>
+        <button
+          ng-click="quizCtrl.restartQuiz()"
+          class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700 transition"
+        >
+          Restart Quiz
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

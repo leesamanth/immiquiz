@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Flashcards - Practice quiz</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #fff;
+        font-family: sans-serif;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 2rem 3rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .btn {
+        background: #0056b3;
+        color: #fafafa;
+        border: 1px solid #0056b3;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin: 0.5rem;
+      }
+      .answer-btn {
+        background: #fafafa;
+        color: #020202;
+        border: 1px solid #0056b3;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin: 0.5rem;
+      }
+      .answer-btn.selected {
+        background: #00b356;
+        font-weight: bold;
+      }
+      .answer-btn.correct {
+        background: #28a745;
+      }
+      .answer-btn.incorrect {
+        background: #dc3545;
+      }
+      .submit-btn {
+        background: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      .result {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container mx-auto px-4 py-0"
+      ng-controller="FlashCardController"
+    >
+      <div class="header">
+        <nav class="flex items-center justify-between p-4 bg-white">
+          <div class="flex items-center space-x-8">
+            <!-- Hamburger button for mobile, now left-aligned -->
+            <button
+              title="Toggle menu"
+              class="md:hidden mr-2 focus:outline-none"
+              ng-click="menuOpen = !menuOpen"
+            >
+              <svg
+                class="w-8 h-8 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+            <img
+              src="images/logo2.svg"
+              alt="Immigration Quiz Logo"
+              class="logo"
+            />
+            <!-- Menu for desktop -->
+            <ul class="hidden md:flex space-x-6">
+              <li><a href="index.html" class="font-bold text-lg"> Home </a></li>
+              <li><a href="#" class="font-bold text-lg"> About </a></li>
+              <li><a href="#" class="font-bold text-lg"> Contact </a></li>
+            </ul>
+          </div>
+          <!-- Mobile drawer -->
+          <div
+            ng-show="menuOpen"
+            class="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50"
+          >
+            <ul class="flex flex-col items-center py-4 space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="mx-auto px-4 py-8 flex flex-col md:flex-row">
+        <main class="flex-1 min-w-0">
+          <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-end mb-4">
+              <label class="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  ng-model="readOutEnabled"
+                  ng-change="onReadOutToggle()"
+                />
+                <span class="text-sm">Read question out loud</span>
+              </label>
+            </div>
+          </div>
+          <div
+            class="card drop-shadow-amber-50 border-2 border-amber-200 rounded-3xl"
+          >
+            <div class="question" ng-bind="currentQuestion.question"></div>
+            <div class="options">
+              <div class="italic text-gray-500" ng-if="!showAnswers">
+                practice saying the answer out loud
+              </div>
+              <div>
+                <button class="btn btn-primary" ng-click="showAnswersFn()">
+                  Show Answers
+                </button>
+              </div>
+            </div>
+            <div ng-if="showAnswers">
+              <ul class="list-none p-0 m-0">
+                <li
+                  class="border-2 border-b-green-900 rounded-lg p-2 m-1 w-full"
+                  ng-repeat="option in currentOptions"
+                >
+                  {{ option }}
+                </li>
+              </ul>
+              <div ng-if="currentQuestion.disclaimer">
+                <p class="text-sm text-gray-500">
+                  {{ currentQuestion.disclaimer }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="grid place-items-end">
+            <button class="btn btn-primary" ng-click="nextQuestion()">
+              Next Question
+            </button>
+          </div>
+        </main>
+        <aside
+          class="w-full md:w-1/3 md:pl-8 mt-8 md:mt-0 max-h-160 overflow-y-scroll"
+        ></aside>
+      </div>
+    </div>
+    <script>
+      angular
+        .module("quizApp", [])
+        .controller("FlashCardController", function ($scope, $http, $timeout) {
+          $scope.questions = [];
+          $scope.flashCardQuestions = [];
+          $scope.currentIndex = 0;
+          $scope.currentQuestion = null;
+          $scope.currentOptions = [];
+          $scope.selectedOptions = [];
+          $scope.showAnswers = false;
+          $scope.flashCardsFinished = false;
+          $scope.score = 0;
+          $scope.answeredQuestions = [];
+          $scope.readOutEnabled = false;
+          $scope.totalQuestions = 100;
+
+          $scope.onReadOutToggle = function () {
+            if (
+              $scope.readOutEnabled &&
+              $scope.currentQuestion &&
+              $scope.currentQuestion.question
+            ) {
+              $timeout(function () {
+                speak($scope.currentQuestion.question);
+              }, 100);
+            } else {
+              if (window.speechSynthesis) window.speechSynthesis.cancel();
+            }
+          };
+
+          $http.get("questions.json").then(
+            function (response) {
+              // Flatten all questions from all sections
+              var allQuestions = [];
+              if (Array.isArray(response.data)) {
+                response.data.forEach(function (q) {
+                  allQuestions.push(q);
+                });
+                $scope.questions = allQuestions;
+                //start flashcards
+                startFlashcards();
+              } else {
+                $scope.questions = [];
+                $scope.quizFinished = true;
+                alert("Error: questions.json is not in the expected format.");
+              }
+            },
+            function (error) {
+              $scope.questions = [];
+              $scope.quizFinished = true;
+              alert("Error loading questions.json");
+            }
+          );
+
+          function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+
+          function speak(text) {
+            if ("speechSynthesis" in window) {
+              var voices = window.speechSynthesis.getVoices();
+              var utter = new SpeechSynthesisUtterance(text);
+              // Alternate between male and female voices
+              if (!$scope.voiceToggle) $scope.voiceToggle = false;
+              var genderVoices = voices.filter(function (v) {
+                return v.lang.startsWith("en") && (v.gender ? true : true);
+              });
+              var femaleVoice = genderVoices.find(function (v) {
+                return (
+                  v.name.toLowerCase().includes("female") ||
+                  v.voiceURI.toLowerCase().includes("female") ||
+                  v.name.toLowerCase().includes("woman")
+                );
+              });
+              var maleVoice = genderVoices.find(function (v) {
+                return (
+                  v.name.toLowerCase().includes("male") ||
+                  v.voiceURI.toLowerCase().includes("male") ||
+                  v.name.toLowerCase().includes("man")
+                );
+              });
+              if ($scope.voiceToggle && femaleVoice) {
+                utter.voice = femaleVoice;
+              } else if (!$scope.voiceToggle && maleVoice) {
+                utter.voice = maleVoice;
+              }
+              $scope.voiceToggle = !$scope.voiceToggle;
+              window.speechSynthesis.cancel();
+              window.speechSynthesis.speak(utter);
+            }
+          }
+
+          function startFlashcards() {
+            $scope.flashCardQuestions = shuffle($scope.questions).slice(
+              0,
+              $scope.totalQuestions
+            );
+            $scope.currentIndex = 0;
+            $scope.flashCardsFinished = false;
+            //call function to display question
+            loadQuestion();
+          }
+
+          function loadQuestion() {
+            if ($scope.currentIndex < $scope.flashCardQuestions.length) {
+              $scope.currentQuestion =
+                $scope.flashCardQuestions[$scope.currentIndex];
+              $scope.selectedOptions = [];
+              $scope.showAnswers = false;
+              // Prepare options
+              var opts = $scope.currentQuestion.answers.slice();
+              // Remove duplicates
+              $scope.currentOptions = shuffle(Array.from(new Set(opts)));
+
+              var msg = $scope.currentQuestion.question;
+
+              if ($scope.readOutEnabled) {
+                $timeout(function () {
+                  speak(msg);
+                }, 100);
+              }
+            } else {
+              $scope.flashCardsFinished = true;
+            }
+          }
+
+          $scope.showAnswersFn = function () {
+            $scope.showAnswers = true;
+            if (
+              $scope.readOutEnabled &&
+              $scope.currentOptions &&
+              $scope.currentOptions.length
+            ) {
+              var msg = "";
+              if ($scope.currentOptions.length > 1) {
+                msg =
+                  "There are " +
+                  $scope.currentOptions.length +
+                  " possible answers. ";
+              }
+              var answersText = $scope.currentOptions.join(". ");
+              if ($scope.currentQuestion.disclaimer)
+                answersText +=
+                  ". Disclaimer - " + $scope.currentQuestion.disclaimer + ". ";
+              speak(msg + answersText);
+            }
+          };
+
+          $scope.nextQuestion = function () {
+            if ($scope.currentIndex < $scope.flashCardQuestions.length - 1) {
+              $scope.currentIndex++;
+              loadQuestion();
+            } else {
+              $scope.flashCardsFinished = true;
+            }
+          };
+        });
+    </script>
+  </body>
+</html>

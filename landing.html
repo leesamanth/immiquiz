@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="landingApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz Landing Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+      body {
+        background: #f4f4f4;
+        font-family: sans-serif;
+      }
+      .landing-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 2rem 3rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .options {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      .option-btn {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .option-btn:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landing-container" ng-controller="LandingController">
+      <div class="card">
+        <h1>Welcome to the US Civics Quiz!</h1>
+        <p>Select an option below to get started:</p>
+        <div class="options">
+          <button class="option-btn" ng-click="goTo('quiz10')">
+            Quiz: Random 10 Questions
+          </button>
+          <button class="option-btn" ng-click="goTo('quizAll')">
+            Quiz: All Questions (Random Order)
+          </button>
+          <button class="option-btn" ng-click="goTo('flashcards')">
+            Flashcards
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      angular
+        .module("landingApp", [])
+        .controller("LandingController", function ($scope) {
+          $scope.goTo = function (option) {
+            if (option === "quiz10") {
+              window.location.href = "index.html?mode=quiz10";
+            } else if (option === "quizAll") {
+              window.location.href = "index.html?mode=quizAll";
+            } else if (option === "flashcards") {
+              window.location.href = "index.html?mode=flashcards";
+            }
+          };
+        });
+    </script>
+  </body>
+</html>

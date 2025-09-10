@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quiz: All Questions</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #fff;
+        font-family: sans-serif;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 2rem 3rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .btn {
+        background: #0056b3;
+        color: #fafafa;
+        border: 1px solid #0056b3;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin: 0.5rem;
+      }
+      .answer-btn {
+        background: #fafafa;
+        color: #020202;
+        border: 1px solid #0056b3;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin: 0.5rem;
+      }
+      .answer-btn.selected {
+        background: #00b356;
+        font-weight: bold;
+      }
+      .answer-btn.correct {
+        background: #28a745;
+      }
+      .answer-btn.incorrect {
+        background: #dc3545;
+      }
+      .submit-btn {
+        background: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      .result {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto px-4 py-0" ng-controller="QuizController">
+      <div class="header">
+        <nav class="flex items-center justify-between p-4 bg-white">
+          <div class="flex items-center space-x-8">
+            <!-- Hamburger button for mobile, now left-aligned -->
+            <button
+              title="Toggle menu"
+              class="md:hidden mr-2 focus:outline-none"
+              ng-click="menuOpen = !menuOpen"
+            >
+              <svg
+                class="w-8 h-8 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+            <img
+              src="images/logo2.svg"
+              alt="Immigration Quiz Logo"
+              class="logo"
+            />
+            <!-- Menu for desktop -->
+            <ul class="hidden md:flex space-x-6">
+              <li><a href="index.html" class="font-bold text-lg"> Home </a></li>
+              <li><a href="#" class="font-bold text-lg"> About </a></li>
+              <li><a href="#" class="font-bold text-lg"> Contact </a></li>
+            </ul>
+          </div>
+          <!-- Mobile drawer -->
+          <div
+            ng-show="menuOpen"
+            class="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50"
+          >
+            <ul class="flex flex-col items-center py-4 space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="mx-auto px-4 py-8 flex flex-col md:flex-row">
+        <main class="flex-1 min-w-0">
+          <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-end mb-4">
+              <label class="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  ng-model="readOutEnabled"
+                  ng-change="onReadOutToggle()"
+                />
+                <span class="text-sm">Read question out loud</span>
+              </label>
+            </div>
+            <div class="card" ng-if="!quizFinished">
+              <div ng-if="currentQuestion">
+                <h2 class="text-xl font-bold mb-2">
+                  Question {{ currentIndex + 1 }} of {{ totalQuestions }}
+                </h2>
+                <div class="mb-2">{{ currentQuestion.question }}</div>
+                <div class="mb-4 text-sm text-gray-600">
+                  Please read your answer outloud
+                </div>
+                <button
+                  class="btn"
+                  ng-if="!showAnswers"
+                  ng-click="revealAnswers()"
+                >
+                  Select Answer(s)
+                </button>
+                <form ng-if="showAnswers">
+                  <div class="flex flex-col items-center mb-4">
+                    <button
+                      type="button"
+                      ng-repeat="option in currentOptions"
+                      ng-class="{
+                      'answer-btn': true,
+                      selected: isSelected(option),
+                    }"
+                      ng-click="toggleSelect(option)"
+                    >
+                      {{ option }}
+                    </button>
+                  </div>
+                  <button type="button" class="btn" ng-click="submitAnswer()">
+                    Submit Answer
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="card" ng-if="quizFinished">
+              <h2 class="text-2xl font-bold mb-2">Quiz Complete!</h2>
+              <div class="result">
+                You answered {{ score }} out of {{ totalQuestions }} questions
+                correctly.
+              </div>
+              <button class="answer-btn mt-4" ng-click="restartQuiz()">
+                Restart Quiz
+              </button>
+              <a href="index.html" class="answer-btn mt-4">Back to Home</a>
+            </div>
+          </div>
+        </main>
+        <aside
+          class="w-full md:w-1/3 md:pl-8 mt-8 md:mt-0 max-h-160 overflow-y-scroll"
+        >
+          <div class="card">
+            <h3 class="text-lg font-bold mb-2">Answered Questions</h3>
+            <div ng-if="answeredQuestions.length === 0" class="text-gray-500">
+              No questions answered yet.
+            </div>
+            <ul class="text-left">
+              <li
+                ng-repeat="aq in answeredQuestions"
+                class="mb-4 border-b pb-2 align-baseline"
+              >
+                <div class="font-semibold">
+                  Q{{ aq.index + 1 }}: {{ aq.question.question }}
+                </div>
+                <div class="text-sm">
+                  Result:
+                  <span
+                    ng-class="{
+                    'text-green-600': aq.isCorrect,
+                    'text-red-600': !aq.isCorrect,
+                  }"
+                  >
+                    {{ aq.isCorrect ? 'Correct' : 'Incorrect' }}
+                  </span>
+                </div>
+                <div class="text-sm mt-1">
+                  Selected Answer(s):
+                  <span class="font-semibold">
+                    {{ aq.selected.join(', ') || 'None' }}
+                  </span>
+                </div>
+                <button
+                  class="answer-btn mt-2"
+                  ng-click="aq.showReview = !aq.showReview"
+                >
+                  {{ aq.showReview ? 'Hide Review' : 'Review Answers' }}
+                </button>
+                <div ng-if="aq.showReview" class="mt-2 text-left">
+                  <div class="font-bold">Possible Answers:</div>
+                  <ul class="list-disc ml-6">
+                    <li ng-repeat="ans in aq.allAnswers">{{ ans }}</li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <script>
+      angular
+        .module("quizApp", [])
+        .controller("QuizController", function ($scope, $http, $timeout) {
+          $scope.questions = [];
+          $scope.quizQuestions = [];
+          $scope.currentIndex = 0;
+          $scope.currentQuestion = null;
+          $scope.currentOptions = [];
+          $scope.selectedOptions = [];
+          $scope.showAnswers = false;
+          $scope.quizFinished = false;
+          $scope.score = 0;
+          $scope.answeredQuestions = [];
+          $scope.readOutEnabled = false;
+          $scope.totalQuestions = 10;
+
+          $scope.onReadOutToggle = function () {
+            if (
+              $scope.readOutEnabled &&
+              $scope.currentQuestion &&
+              $scope.currentQuestion.question
+            ) {
+              $timeout(function () {
+                speak($scope.currentQuestion.question);
+              }, 100);
+            } else {
+              if (window.speechSynthesis) window.speechSynthesis.cancel();
+            }
+          };
+
+          $http.get("questions.json").then(
+            function (response) {
+              // Flatten all questions from all sections
+              var allQuestions = [];
+              if (Array.isArray(response.data)) {
+                response.data.forEach(function (q) {
+                  allQuestions.push(q);
+                });
+                $scope.questions = allQuestions;
+                startQuiz();
+              } else {
+                $scope.questions = [];
+                $scope.quizFinished = true;
+                alert("Error: questions.json is not in the expected format.");
+              }
+            },
+            function (error) {
+              $scope.questions = [];
+              $scope.quizFinished = true;
+              alert("Error loading questions.json");
+            }
+          );
+
+          function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+
+          function speak(text) {
+            if ("speechSynthesis" in window) {
+              var voices = window.speechSynthesis.getVoices();
+              var utter = new SpeechSynthesisUtterance(text);
+              // Alternate between male and female voices
+              if (!$scope.voiceToggle) $scope.voiceToggle = false;
+              var genderVoices = voices.filter(function (v) {
+                return v.lang.startsWith("en") && (v.gender ? true : true);
+              });
+              var femaleVoice = genderVoices.find(function (v) {
+                return (
+                  v.name.toLowerCase().includes("female") ||
+                  v.voiceURI.toLowerCase().includes("female") ||
+                  v.name.toLowerCase().includes("woman")
+                );
+              });
+              var maleVoice = genderVoices.find(function (v) {
+                return (
+                  v.name.toLowerCase().includes("male") ||
+                  v.voiceURI.toLowerCase().includes("male") ||
+                  v.name.toLowerCase().includes("man")
+                );
+              });
+              if ($scope.voiceToggle && femaleVoice) {
+                utter.voice = femaleVoice;
+              } else if (!$scope.voiceToggle && maleVoice) {
+                utter.voice = maleVoice;
+              }
+              $scope.voiceToggle = !$scope.voiceToggle;
+              window.speechSynthesis.cancel();
+              window.speechSynthesis.speak(utter);
+            }
+          }
+
+          function startQuiz() {
+            $scope.quizQuestions = shuffle($scope.questions.slice()).slice(
+              0,
+              $scope.totalQuestions
+            );
+            //test case
+            /*   var oneQuestion = $scope.quizQuestions.filter(
+              (e) =>
+                e.question && e.question.toLowerCase().includes("name three")
+            );
+            if (oneQuestion.length > 0) {
+              $scope.quizQuestions = oneQuestion;
+              $scope.totalQuestions = oneQuestion.length;
+            } */
+            //test case ends
+            $scope.currentIndex = 0;
+            $scope.score = 0;
+            $scope.quizFinished = false;
+            loadQuestion();
+          }
+
+          function loadQuestion() {
+            $scope.currentQuestion = $scope.quizQuestions[$scope.currentIndex];
+            $scope.showAnswers = false;
+            $scope.selectedOptions = [];
+            // Combine answerOptions and answers
+            var opts = [];
+            if (
+              $scope.currentQuestion &&
+              Array.isArray($scope.currentQuestion.answerOptions)
+            ) {
+              opts = $scope.currentQuestion.answerOptions.map(function (o) {
+                return o.answerText;
+              });
+            }
+            if (
+              $scope.currentQuestion &&
+              Array.isArray($scope.currentQuestion.answers)
+            ) {
+              opts = opts.concat($scope.currentQuestion.answers);
+            }
+            // Remove duplicates
+            $scope.currentOptions = shuffle(Array.from(new Set(opts)));
+            // Analyze question for selection type
+            var qText = ($scope.currentQuestion.question || "").toLowerCase();
+
+            if (qText.includes("select all")) {
+              $scope.selectionType = "all";
+              $scope.maxSelections = $scope.currentQuestion.answers.length;
+            } else if (qText.includes("name three")) {
+              $scope.selectionType = "three";
+              $scope.maxSelections = 3;
+            } else if (
+              qText.includes("select two") ||
+              qText.includes("what are two") ||
+              qText.includes("name two")
+            ) {
+              $scope.selectionType = "two";
+              $scope.maxSelections = 2;
+            } else {
+              $scope.selectionType = "single";
+              $scope.maxSelections = 1;
+            }
+            // Read out question if enabled
+            $timeout(function () {
+              if (
+                $scope.readOutEnabled &&
+                $scope.currentQuestion &&
+                $scope.currentQuestion.question
+              ) {
+                speak($scope.currentQuestion.question);
+              }
+            }, 300);
+          }
+
+          $scope.isSelected = function (option) {
+            return $scope.selectedOptions.indexOf(option) !== -1;
+          };
+
+          $scope.toggleSelect = function (option) {
+            if ($scope.isSelected(option)) {
+              $scope.selectedOptions = $scope.selectedOptions.filter(function (
+                o
+              ) {
+                return o !== option;
+              });
+            } else {
+              if ($scope.selectionType === "single") {
+                $scope.selectedOptions = [option];
+              } else if ($scope.selectionType === "two") {
+                if ($scope.selectedOptions.length < 2) {
+                  $scope.selectedOptions.push(option);
+                }
+              } else if ($scope.selectionType === "three") {
+                if ($scope.selectedOptions.length < 3) {
+                  $scope.selectedOptions.push(option);
+                }
+              } else if ($scope.selectionType === "all") {
+                if ($scope.selectedOptions.length < $scope.maxSelections) {
+                  $scope.selectedOptions.push(option);
+                }
+              }
+            }
+          };
+
+          $scope.submitAnswer = function () {
+            var correct = $scope.currentQuestion.answers || [];
+            var selected = $scope.selectedOptions;
+
+            // Mark correct only if selectedOptions equal to scope.maxSelections and selectedOptions are all in correct answers
+            var isCorrect =
+              selected.length === $scope.maxSelections &&
+              selected.every(function (s) {
+                return correct.indexOf(s) !== -1;
+              });
+
+            if (isCorrect) $scope.score++;
+            // Save answered question to aside
+            var reviewAnswers = Array.isArray($scope.currentQuestion.answers)
+              ? $scope.currentQuestion.answers.slice()
+              : [];
+            $scope.answeredQuestions.push({
+              index: $scope.currentIndex,
+              question: $scope.currentQuestion,
+              isCorrect: isCorrect,
+              selected: selected.slice(),
+              allAnswers: reviewAnswers,
+              showReview: false,
+            });
+            $scope.currentIndex++;
+            if ($scope.currentIndex < $scope.totalQuestions) {
+              loadQuestion();
+            } else {
+              $scope.quizFinished = true;
+            }
+          };
+
+          $scope.revealAnswers = function () {
+            $scope.showAnswers = true;
+          };
+
+          $scope.restartQuiz = function () {
+            $scope.answeredQuestions = [];
+            startQuiz();
+          };
+        });
+    </script>
+  </body>
+</html>
