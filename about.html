@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quizApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <title>US Citizenship Quiz - Practice Questions & Flashcards</title>
+    <meta
+      name="description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="keywords"
+      content="US citizenship, quiz, flashcards, naturalization, practice test, immigration, civics, questions, answers"
+    />
+    <meta name="author" content="immiquiz.com" />
+    <meta
+      property="og:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      property="og:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://immiquiz.com/" />
+    <meta property="og:image" content="https://immiquiz.com/images/logo2.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      name="twitter:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="twitter:image"
+      content="https://immiquiz.com/images/logo2.svg"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DZ4QLE2QX7"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #ffffff;
+        font-family: sans-serif;
+      }
+      .landing-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 2rem 3rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .options {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      .option-btn {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .option-btn:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto px-4 py-0" ng-controller="AboutController">
+      <div class="header">
+        <nav class="flex items-center justify-between p-4 bg-white">
+          <div class="flex items-center space-x-8">
+            <!-- Hamburger button for mobile, now left-aligned -->
+            <button
+              title="Toggle menu"
+              class="md:hidden mr-2 focus:outline-none"
+              ng-click="menuOpen = !menuOpen"
+            >
+              <svg
+                class="w-8 h-8 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+            <img
+              src="images/logo2.svg"
+              alt="Immigration Quiz Logo"
+              class="logo"
+            />
+            <!-- Menu for desktop -->
+            <ul class="hidden md:flex space-x-6">
+              <li><a href="index.html" class="font-bold text-lg"> Home </a></li>
+              <li>
+                <a href="store.html" class="font-bold text-lg"> Store </a>
+              </li>
+              <li>
+                <a href="about.html" class="font-bold text-lg"> About </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Mobile drawer -->
+          <div
+            ng-show="menuOpen"
+            class="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50"
+          >
+            <ul class="flex flex-col items-center py-4 space-y-2">
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="store.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  Store
+                </a>
+              </li>
+              <li>
+                <a
+                  href="about.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    <div>
+      <div class="max-w-2xl bg-white rounded-lg shadow-lg p-8 mx-auto">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="images/logo2.svg" alt="ImmiQuiz Logo" class="h-14 w-14" />
+          <h1 class="text-3xl font-bold text-blue-700">About ImmiQuiz</h1>
+        </div>
+        <p class="text-lg text-gray-700 mb-4">
+          ImmiQuiz is dedicated to helping immigrants and aspiring US citizens
+          prepare for the naturalization process. Our platform offers a
+          comprehensive set of practice questions, flashcards, and quizzes based
+          on the official US citizenship test.
+        </p>
+        <p class="mb-4 text-gray-700">
+          We believe that everyone deserves access to high-quality, free resources
+          to study and succeed. Our quizzes and flashcards are designed to make
+          learning easy, interactive, and effective, whether you're studying alone
+          or with friends and family.
+        </p>
+        <p class="mb-4 text-gray-700">
+          <strong>Features:</strong>
+          <ul class="list-disc pl-6 mt-2">
+            <li>Practice with hundreds of real citizenship test questions</li>
+            <li>Review answers and explanations for every question</li>
+            <li>Use flashcards for quick study sessions</li>
+            <li>Track your progress and improve your score</li>
+          </ul>
+        </p>        
+        <p class="mb-4 mt-4 text-gray-700">
+          <h5 class="font-bold text-gray-700 mb-2">Disclaimer:</h5>
+          ImmiQuiz is not affiliated with any government agency. All content is
+          for educational purposes and should be verified with official sources.
+          We welcome feedback and suggestions to make our platform even better for
+          the community.
+        </p>
+        <p class="text-gray-600 text-sm mt-6">
+          &copy; 2025 ImmiQuiz.com. All rights reserved.
+        </p>
+      </div>
+    </div>
+    <footer class="bg-gray-100 py-4">
+      <div class="container mx-auto text-center">
+        <p class="text-sm text-gray-600">
+          &copy; 2023 immiquiz.com. All rights reserved.
+        </p>
+      </div>
+    </footer>
+    <script>
+      angular
+        .module("quizApp", [])
+        .controller("AboutController", function ($scope) {});
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+    
+        gtag("config", "G-DZ4QLE2QX7");
+    </script>
+  </body>
+</html>

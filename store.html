@@ -1,0 +1,182 @@
+ <title>US Citizenship Quiz - Practice Questions & Flashcards</title>
+    <meta
+      name="description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="keywords"
+      content="US citizenship, quiz, flashcards, naturalization, practice test, immigration, civics, questions, answers"
+    />
+    <meta name="author" content="immiquiz.com" />
+    <meta
+      property="og:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      property="og:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://immiquiz.com/" />
+    <meta property="og:image" content="https://immiquiz.com/images/logo2.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="US Citizenship Quiz - Practice Questions & Flashcards"
+    />
+    <meta
+      name="twitter:description"
+      content="Practice US citizenship test questions and answers. Review flashcards, take quizzes, and prepare for your naturalization interview with immiquiz.com."
+    />
+    <meta
+      name="twitter:image"
+      content="https://immiquiz.com/images/logo2.svg"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DZ4QLE2QX7"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: #ffffff;
+        font-family: sans-serif;
+      }
+      .landing-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        padding: 2rem 3rem;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+      .options {
+        display: flex;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      .option-btn {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .option-btn:hover {
+        background: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto px-4 py-0" ng-controller="StoreController">
+      <div class="header">
+        <nav class="flex items-center justify-between p-4 bg-white">
+          <div class="flex items-center space-x-8">
+            <!-- Hamburger button for mobile, now left-aligned -->
+            <button
+              title="Toggle menu"
+              class="md:hidden mr-2 focus:outline-none"
+              ng-click="menuOpen = !menuOpen"
+            >
+              <svg
+                class="w-8 h-8 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+            <img
+              src="images/logo2.svg"
+              alt="Immigration Quiz Logo"
+              class="logo"
+            />
+            <!-- Menu for desktop -->
+            <ul class="hidden md:flex space-x-6">
+              <li><a href="index.html" class="font-bold text-lg"> Home </a></li>
+              <li>
+                <a href="store.html" class="font-bold text-lg"> Store </a>
+              </li>
+              <li>
+                <a href="about.html" class="font-bold text-lg"> About </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Mobile drawer -->
+          <div
+            ng-show="menuOpen"
+            class="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50"
+          >
+            <ul class="flex flex-col items-center py-4 space-y-2">
+              <li>
+                <a href="#" class="font-bold text-lg block w-full px-4 py-2">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="store.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  Store
+                </a>
+              </li>
+              <li>
+                <a
+                  href="about.html"
+                  class="font-bold text-lg block w-full px-4 py-2"
+                >
+                  About
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="card">
+        <h1 class="text-2xl md:text-3xl font-bold mb-2">
+          Welcome to the immiquiz Store!
+        </h1>
+      </div>
+    </div>
+    <script>
+      angular
+        .module("landingApp", [])
+        .controller("StoreController", function ($scope) {
+          $scope.menuOpen = false;
+        });
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+    
+        gtag("config", "G-DZ4QLE2QX7");
+    </script>
+  </body>
+</html>
+        
