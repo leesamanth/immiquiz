@@ -441,10 +441,10 @@
 
           function startFlashcards() {
             //clear this.
-            $scope.questions = $scope.questions.filter(function (q) {
+            /*      $scope.questions = $scope.questions.filter(function (q) {
               return q.requiresState === true;
             });
-            $scope.totalQuestions = $scope.questions.length;
+            $scope.totalQuestions = $scope.questions.length; */
             //clear this.
             $scope.flashCardQuestions = shuffle($scope.questions).slice(
               0,
