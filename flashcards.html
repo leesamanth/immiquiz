@@ -209,10 +209,24 @@
               <div class="italic text-gray-500" ng-if="!showAnswers">
                 practice saying the answer out loud
               </div>
-              <div>
-                <button class="btn btn-primary" ng-click="showAnswersFn()">
-                  Show Answers
-                </button>
+              <div ng-if="(requiresAdditionalInput)">
+                <label for="stateSelect" class="block mb-2 font-semibold">
+                  Select your state:
+                </label>
+                <select
+                  id="stateSelect"
+                  ng-model="selection.selectedState"
+                  ng-options="state.abbreviation as state.name for state in states track by state.abbreviation"
+                  ng-change="onStateSelectionChange()"
+                  class="border rounded px-3 py-2 mb-4 w-full"
+                ></select>
+              </div>
+              <div ng-if="!showAnswers">
+                <div>
+                  <button class="btn btn-primary" ng-click="showAnswersFn()">
+                    Show Answers
+                  </button>
+                </div>
               </div>
             </div>
             <div ng-if="showAnswers">
@@ -253,11 +267,78 @@
           $scope.currentOptions = [];
           $scope.selectedOptions = [];
           $scope.showAnswers = false;
+          $scope.requiresAdditionalInput = false;
           $scope.flashCardsFinished = false;
           $scope.score = 0;
           $scope.answeredQuestions = [];
           $scope.readOutEnabled = false;
           $scope.totalQuestions = 100;
+          $scope.selection = { selectedState: null };
+          $scope.states = [];
+
+          $scope.onStateSelectionChange = function () {
+            var selectedChoice = $scope.selection.selectedState;
+            var selectedStateName = $scope.states.find(function (s) {
+              return s.abbreviation === selectedChoice;
+            })?.name;
+            var url = $scope.currentQuestion.answerSource;
+            if (url && selectedChoice && selectedChoice !== "-") {
+              var finalUrl = url.replace("{state}", selectedChoice);
+              $http.get(finalUrl).then(
+                function (response) {
+                  if (
+                    response.data &&
+                    response.data.members &&
+                    response.data.members.length > 0
+                  ) {
+                    $scope.currentOptions = [];
+                    response.data.members.forEach(function (m) {
+                      if (m.terms.item) {
+                        m.terms.item.forEach(function (t) {
+                          if (
+                            t.chamber &&
+                            t.chamber === $scope.currentQuestion.chamber
+                          ) {
+                            if (
+                              !t.endYear ||
+                              t.endYear >= new Date().getFullYear()
+                            ) {
+                              $scope.currentOptions.push(m.name);
+                            }
+                          }
+                        });
+                      }
+                    });
+                    $scope.showAnswers = true;
+                    var membersList = [];
+                    $scope.currentOptions.forEach(function (member) {
+                      membersList.push(member.replace(/,/g, " "));
+                    });
+                    var msg =
+                      "Members of the " +
+                      $scope.currentQuestion.chamber +
+                      " from " +
+                      selectedStateName +
+                      " are  , ," +
+                      membersList.join(", , ");
+                    if ($scope.readOutEnabled) {
+                      $timeout(function () {
+                        speak(msg);
+                      }, 200);
+                    }
+                  } else {
+                    alert("No answer found for the selected state.");
+                  }
+                },
+                function (error) {
+                  alert("Error loading answer data.");
+                }
+              );
+            } else {
+              $scope.showAnswers = true;
+              $scope.currentOptions = $scope.currentQuestion.answers.slice(); //copy array
+            }
+          };
 
           $scope.onReadOutToggle = function () {
             if (
@@ -294,6 +375,25 @@
               $scope.questions = [];
               $scope.quizFinished = true;
               alert("Error loading questions.json");
+            }
+          );
+
+          $http.get("states.json").then(
+            function (response) {
+              $scope.states = response.data;
+              // Add a default "prompt" option to the beginning of the array
+              $scope.states.unshift({
+                name: "-- Choose State --",
+                abbreviation: "-",
+              });
+              // Set the model to the default value
+              $scope.selection.selectedState = "-";
+              if (!$scope.states || $scope.states.length === 0) {
+                console.log("No states available");
+              }
+            },
+            function (error) {
+              $scope.states = [];
             }
           );
 
@@ -340,6 +440,12 @@
           }
 
           function startFlashcards() {
+            //clear this.
+            $scope.questions = $scope.questions.filter(function (q) {
+              return q.requiresState === true;
+            });
+            $scope.totalQuestions = $scope.questions.length;
+            //clear this.
             $scope.flashCardQuestions = shuffle($scope.questions).slice(
               0,
               $scope.totalQuestions
@@ -352,6 +458,8 @@
 
           function loadQuestion() {
             if ($scope.currentIndex < $scope.flashCardQuestions.length) {
+              $scope.selection.selectedState = "-";
+              $scope.requiresAdditionalInput = false;
               $scope.currentQuestion =
                 $scope.flashCardQuestions[$scope.currentIndex];
               $scope.selectedOptions = [];
@@ -374,12 +482,14 @@
           }
 
           $scope.showAnswersFn = function () {
-            $scope.showAnswers = true;
+            $scope.selection.selectedState = "-";
             if (
+              !$scope.currentQuestion.requiresState &&
               $scope.readOutEnabled &&
               $scope.currentOptions &&
               $scope.currentOptions.length
             ) {
+              $scope.showAnswers = true;
               var msg = "";
               if ($scope.currentOptions.length > 1) {
                 msg =
@@ -392,6 +502,14 @@
                 answersText +=
                   ". Disclaimer - " + $scope.currentQuestion.disclaimer + ". ";
               speak(msg + answersText);
+            } else {
+              $scope.showAnswers = false;
+              $scope.requiresAdditionalInput = true;
+              if ($scope.readOutEnabled) {
+                $timeout(function () {
+                  speak("Please select your state.");
+                }, 200);
+              }
             }
           };
 

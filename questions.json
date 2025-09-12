@@ -392,6 +392,9 @@
   {
     "question": "Who is one of your state’s U.S. Senators now?",
     "answers": ["Mark Kelly", "Ruben Gallego"],
+    "requiresState": true,
+    "chamber": "Senate",
+    "answerSource": "https://api.congress.gov/v3/member/{state}?format=json&api_key=Cagn85U7k41el3I7IS4KPz1b2NX2mdogQ6zKhaJN&currentMember=true&limit=100",
     "disclaimer": "as of Aug 2025, senators vary by state. refer https://www.senate.gov/senators/index.htm for your senator",
     "answerOptions": [
       {
@@ -450,6 +453,9 @@
   {
     "question": "Name your U.S. Representative.",
     "answers": ["Andy Biggs"],
+    "requiresState": true,
+    "chamber": "House of Representatives",
+    "answerSource": "https://api.congress.gov/v3/member/{state}?format=json&api_key=Cagn85U7k41el3I7IS4KPz1b2NX2mdogQ6zKhaJN&currentMember=true&limit=100",
     "disclaimer": "as of Aug 2025, US Representatives vary by congressional district. https://www.house.gov/representatives",
     "answerOptions": [
       {
