@@ -1,0 +1,26 @@
+[
+  {
+    "name": "American Samoa",
+    "abbreviation": "AS"
+  },
+  {
+    "name": "Guam",
+    "abbreviation": "GU"
+  },
+  {
+    "name": "Northern Mariana Islands",
+    "abbreviation": "MP"
+  },
+  {
+    "name": "Puerto Rico",
+    "abbreviation": "PR"
+  },
+  {
+    "name": "Virgin Islands",
+    "abbreviation": "VI"
+  },
+  {
+    "name": "District of Columbia",
+    "abbreviation": "DC"
+  }
+]

@@ -1,0 +1,277 @@
+[
+  {
+    "statename": "Alabama",
+    "statecode": "AL",
+    "governorsname": "Kay Ivey"
+  },
+  {
+    "statename": "Alaska",
+    "statecode": "AK",
+    "governorsname": "Mike Dunleavy"
+  },
+  {
+    "statename": "American Samoa",
+    "statecode": "AS",
+    "governorsname": "Pula’ali’i Nikolao Pula"
+  },
+  {
+    "statename": "Arizona",
+    "statecode": "AZ",
+    "governorsname": "Katie Hobbs"
+  },
+  {
+    "statename": "Arkansas",
+    "statecode": "AR",
+    "governorsname": "Sarah Huckabee Sanders"
+  },
+  {
+    "statename": "California",
+    "statecode": "CA",
+    "governorsname": "Gavin Newsom"
+  },
+  {
+    "statename": "Colorado",
+    "statecode": "CO",
+    "governorsname": "Jared Polis"
+  },
+  {
+    "statename": "Connecticut",
+    "statecode": "CT",
+    "governorsname": "Ned Lamont"
+  },
+  {
+    "statename": "Delaware",
+    "statecode": "DE",
+    "governorsname": "Matt Meyer"
+  },
+  {
+    "statename": "Florida",
+    "statecode": "FL",
+    "governorsname": "Ron DeSantis"
+  },
+  {
+    "statename": "Georgia",
+    "statecode": "GA",
+    "governorsname": "Brian Kemp"
+  },
+  {
+    "statename": "Guam",
+    "statecode": "GU",
+    "governorsname": "Lou Leon Guerrero"
+  },
+  {
+    "statename": "Hawaii",
+    "statecode": "HI",
+    "governorsname": "Josh Green"
+  },
+  {
+    "statename": "Idaho",
+    "statecode": "ID",
+    "governorsname": "Brad Little"
+  },
+  {
+    "statename": "Illinois",
+    "statecode": "IL",
+    "governorsname": "JB Pritzker"
+  },
+  {
+    "statename": "Indiana",
+    "statecode": "IN",
+    "governorsname": "Mike Braun"
+  },
+  {
+    "statename": "Iowa",
+    "statecode": "IA",
+    "governorsname": "Kim Reynolds"
+  },
+  {
+    "statename": "Kansas",
+    "statecode": "KS",
+    "governorsname": "Laura Kelly"
+  },
+  {
+    "statename": "Kentucky",
+    "statecode": "KY",
+    "governorsname": "Andy Beshear"
+  },
+  {
+    "statename": "Louisiana",
+    "statecode": "LA",
+    "governorsname": "Jeff Landry"
+  },
+  {
+    "statename": "Maine",
+    "statecode": "ME",
+    "governorsname": "Janet Mills"
+  },
+  {
+    "statename": "Maryland",
+    "statecode": "MD",
+    "governorsname": "Wes Moore"
+  },
+  {
+    "statename": "Massachusetts",
+    "statecode": "MA",
+    "governorsname": "Maura Healey"
+  },
+  {
+    "statename": "Michigan",
+    "statecode": "MI",
+    "governorsname": "Gretchen Whitmer"
+  },
+  {
+    "statename": "Minnesota",
+    "statecode": "MN",
+    "governorsname": "Tim Walz"
+  },
+  {
+    "statename": "Mississippi",
+    "statecode": "MS",
+    "governorsname": "Tate Reeves"
+  },
+  {
+    "statename": "Missouri",
+    "statecode": "MO",
+    "governorsname": "Mike Kehoe"
+  },
+  {
+    "statename": "Montana",
+    "statecode": "MT",
+    "governorsname": "Greg Gianforte"
+  },
+  {
+    "statename": "Nebraska",
+    "statecode": "NE",
+    "governorsname": "Jim Pillen"
+  },
+  {
+    "statename": "Nevada",
+    "statecode": "NV",
+    "governorsname": "Joe Lombardo"
+  },
+  {
+    "statename": "New Hampshire",
+    "statecode": "NH",
+    "governorsname": "Kelly Ayotte"
+  },
+  {
+    "statename": "New Jersey",
+    "statecode": "NJ",
+    "governorsname": "Phil Murphy"
+  },
+  {
+    "statename": "New Mexico",
+    "statecode": "NM",
+    "governorsname": "Michelle Lujan Grisham"
+  },
+  {
+    "statename": "New York",
+    "statecode": "NY",
+    "governorsname": "Kathy Hochul"
+  },
+  {
+    "statename": "North Carolina",
+    "statecode": "NC",
+    "governorsname": "Josh Stein"
+  },
+  {
+    "statename": "North Dakota",
+    "statecode": "ND",
+    "governorsname": "Kelly Armstrong"
+  },
+  {
+    "statename": "Northern Mariana Islands",
+    "statecode": "MP",
+    "governorsname": "David M. Apatang"
+  },
+  {
+    "statename": "Ohio",
+    "statecode": "OH",
+    "governorsname": "Mike DeWine"
+  },
+  {
+    "statename": "Oklahoma",
+    "statecode": "OK",
+    "governorsname": "Kevin Stitt"
+  },
+  {
+    "statename": "Oregon",
+    "statecode": "OR",
+    "governorsname": "Tina Kotek"
+  },
+  {
+    "statename": "Pennsylvania",
+    "statecode": "PA",
+    "governorsname": "Josh Shapiro"
+  },
+  {
+    "statename": "Puerto Rico",
+    "statecode": "PR",
+    "governorsname": "Jenniffer González-Colón"
+  },
+  {
+    "statename": "Rhode Island",
+    "statecode": "RI",
+    "governorsname": "Dan McKee"
+  },
+  {
+    "statename": "South Carolina",
+    "statecode": "SC",
+    "governorsname": "Henry McMaster"
+  },
+  {
+    "statename": "South Dakota",
+    "statecode": "SD",
+    "governorsname": "Larry Rhoden"
+  },
+  {
+    "statename": "Tennessee",
+    "statecode": "TN",
+    "governorsname": "Bill Lee"
+  },
+  {
+    "statename": "Texas",
+    "statecode": "TX",
+    "governorsname": "Greg Abbott"
+  },
+  {
+    "statename": "Utah",
+    "statecode": "UT",
+    "governorsname": "Spencer Cox"
+  },
+  {
+    "statename": "Vermont",
+    "statecode": "VT",
+    "governorsname": "Phil Scott"
+  },
+  {
+    "statename": "Virgin Islands",
+    "statecode": "VI",
+    "governorsname": "Albert Bryan"
+  },
+  {
+    "statename": "Virginia",
+    "statecode": "VA",
+    "governorsname": "Glenn Youngkin"
+  },
+  {
+    "statename": "Washington",
+    "statecode": "WA",
+    "governorsname": "Bob Ferguson"
+  },
+  {
+    "statename": "West Virginia",
+    "statecode": "WV",
+    "governorsname": "Patrick Morrisey"
+  },
+  {
+    "statename": "Wisconsin",
+    "statecode": "WI",
+    "governorsname": "Tony Evers"
+  },
+  {
+    "statename": "Wyoming",
+    "statecode": "WY",
+    "governorsname": "Mark Gordon"
+  }
+]

@@ -394,7 +394,6 @@
     "answers": ["Mark Kelly", "Ruben Gallego"],
     "requiresState": true,
     "chamber": "Senate",
-    "answerSource": "https://api.congress.gov/v3/member/{state}?format=json&api_key=Cagn85U7k41el3I7IS4KPz1b2NX2mdogQ6zKhaJN&currentMember=true&limit=100",
     "disclaimer": "as of Aug 2025, senators vary by state. refer https://www.senate.gov/senators/index.htm for your senator",
     "answerOptions": [
       {
@@ -455,7 +454,6 @@
     "answers": ["Andy Biggs"],
     "requiresState": true,
     "chamber": "House of Representatives",
-    "answerSource": "https://api.congress.gov/v3/member/{state}?format=json&api_key=Cagn85U7k41el3I7IS4KPz1b2NX2mdogQ6zKhaJN&currentMember=true&limit=100",
     "disclaimer": "as of Aug 2025, US Representatives vary by congressional district. https://www.house.gov/representatives",
     "answerOptions": [
       {
@@ -872,6 +870,8 @@
   },
   {
     "question": "Who is the Governor of your state now?",
+    "requiresState": true,
+    "chamber": "Governor",
     "answers": ["Katie Hobbs"],
     "disclaimer": "as of Aug 2025, for correct answer please check official sources. https://azgovernor.gov/",
     "answerOptions": [
@@ -892,6 +892,8 @@
   },
   {
     "question": "What is the capital of your state?",
+    "requiresState": true,
+    "chamber": "Capital",
     "answers": ["Phoenix"],
     "disclaimer": "US capitals vary by state. refer https://simple.wikipedia.org/wiki/List_of_U.S._state_capitals for your state capital",
     "answerOptions": [

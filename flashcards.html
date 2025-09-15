@@ -201,47 +201,59 @@
               </label>
             </div>
           </div>
+          <!-- State/Territory selection dropdown shown on page load -->
           <div
-            class="card drop-shadow-amber-50 border-2 border-amber-200 rounded-3xl"
+            ng-if="!selection.selectedState || selection.selectedState === '-' || selection.selectedState === ''"
+            class="card border-2 border-blue-200 rounded-3xl mb-8"
           >
-            <div class="question" ng-bind="currentQuestion.question"></div>
-            <div class="options">
-              <div class="italic text-gray-500" ng-if="!showAnswers">
-                practice saying the answer out loud
-              </div>
-              <div ng-if="(requiresAdditionalInput)">
-                <label for="stateSelect" class="block mb-2 font-semibold">
-                  Select your state:
-                </label>
-                <select
-                  id="stateSelect"
-                  ng-model="selection.selectedState"
-                  ng-options="state.abbreviation as state.name for state in states track by state.abbreviation"
-                  ng-change="onStateSelectionChange()"
-                  class="border rounded px-3 py-2 mb-4 w-full"
-                ></select>
-              </div>
-              <div ng-if="!showAnswers">
-                <div>
-                  <button class="btn btn-primary" ng-click="showAnswersFn()">
-                    Show Answers
-                  </button>
+            <label for="stateTerritorySelect" class="block mb-2 font-semibold"
+              >Select your state or territory:</label
+            >
+            <select
+              id="stateTerritorySelect"
+              ng-model="selection.selectedState"
+              ng-change="onStateSelectionChange()"
+              ng-options="item.abbreviation as item.name for item in combinedStatesTerritories track by item.abbreviation"
+              class="border rounded px-3 py-2 mb-4 w-full"
+            >
+              <option value="">-- Choose State or Territory --</option>
+            </select>
+          </div>
+          <!-- Flashcards shown only after selection -->
+          <div
+            class="mt-6"
+            ng-if="selection.selectedState && selection.selectedState !== '-' && selection.selectedState !== ''"
+          >
+            <div
+              class="card drop-shadow-amber-50 border-2 border-amber-200 rounded-3xl"
+            >
+              <div class="question" ng-bind="currentQuestion.question"></div>
+              <div class="options">
+                <div class="italic text-gray-500" ng-if="!showAnswers">
+                  practice saying the answer out loud
+                </div>
+                <div ng-if="!showAnswers">
+                  <div>
+                    <button class="btn btn-primary" ng-click="showAnswersFn()">
+                      Show Answers
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div ng-if="showAnswers">
-              <ul class="list-none p-0 m-0">
-                <li
-                  class="border-2 border-b-green-900 rounded-lg p-2 m-1 w-full"
-                  ng-repeat="option in currentOptions"
-                >
-                  {{ option }}
-                </li>
-              </ul>
-              <div ng-if="currentQuestion.disclaimer">
-                <p class="text-sm text-gray-500">
-                  {{ currentQuestion.disclaimer }}
-                </p>
+              <div ng-if="showAnswers" class="pt-5">
+                <ul class="list-none p-0 m-0">
+                  <li
+                    class="border-2 border-b-green-900 rounded-lg p-2 m-1 w-full"
+                    ng-repeat="option in currentOptions"
+                  >
+                    {{ option }}
+                  </li>
+                </ul>
+                <div ng-if="currentQuestion.disclaimer">
+                  <p class="text-sm text-gray-500">
+                    {{ currentQuestion.disclaimer }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -275,69 +287,15 @@
           $scope.totalQuestions = 100;
           $scope.selection = { selectedState: null };
           $scope.states = [];
+          $scope.territories = [];
+          $scope.combinedStatesTerritories = [];
+          $scope.governors = [];
+          $scope.capitals = [];
+          $scope.congressByState = {};
+          $scope.congressDataLoading = false;
 
           $scope.onStateSelectionChange = function () {
-            var selectedChoice = $scope.selection.selectedState;
-            var selectedStateName = $scope.states.find(function (s) {
-              return s.abbreviation === selectedChoice;
-            })?.name;
-            var url = $scope.currentQuestion.answerSource;
-            if (url && selectedChoice && selectedChoice !== "-") {
-              var finalUrl = url.replace("{state}", selectedChoice);
-              $http.get(finalUrl).then(
-                function (response) {
-                  if (
-                    response.data &&
-                    response.data.members &&
-                    response.data.members.length > 0
-                  ) {
-                    $scope.currentOptions = [];
-                    response.data.members.forEach(function (m) {
-                      if (m.terms.item) {
-                        m.terms.item.forEach(function (t) {
-                          if (
-                            t.chamber &&
-                            t.chamber === $scope.currentQuestion.chamber
-                          ) {
-                            if (
-                              !t.endYear ||
-                              t.endYear >= new Date().getFullYear()
-                            ) {
-                              $scope.currentOptions.push(m.name);
-                            }
-                          }
-                        });
-                      }
-                    });
-                    $scope.showAnswers = true;
-                    var membersList = [];
-                    $scope.currentOptions.forEach(function (member) {
-                      membersList.push(member.replace(/,/g, " "));
-                    });
-                    var msg =
-                      "Members of the " +
-                      $scope.currentQuestion.chamber +
-                      " from " +
-                      selectedStateName +
-                      " are  , ," +
-                      membersList.join(", , ");
-                    if ($scope.readOutEnabled) {
-                      $timeout(function () {
-                        speak(msg);
-                      }, 200);
-                    }
-                  } else {
-                    alert("No answer found for the selected state.");
-                  }
-                },
-                function (error) {
-                  alert("Error loading answer data.");
-                }
-              );
-            } else {
-              $scope.showAnswers = true;
-              $scope.currentOptions = $scope.currentQuestion.answers.slice(); //copy array
-            }
+            loadQuestion();
           };
 
           $scope.onReadOutToggle = function () {
@@ -363,6 +321,9 @@
                   allQuestions.push(q);
                 });
                 $scope.questions = allQuestions;
+                // .filter(function (q) {
+                //   return q.requiresState === true;
+                // });
                 //start flashcards
                 startFlashcards();
               } else {
@@ -378,22 +339,64 @@
             }
           );
 
+          // Load states and territories, then combine
           $http.get("states.json").then(
             function (response) {
               $scope.states = response.data;
-              // Add a default "prompt" option to the beginning of the array
-              $scope.states.unshift({
-                name: "-- Choose State --",
-                abbreviation: "-",
-              });
-              // Set the model to the default value
-              $scope.selection.selectedState = "-";
-              if (!$scope.states || $scope.states.length === 0) {
-                console.log("No states available");
+              $http.get("territories.json").then(
+                function (resp) {
+                  $scope.territories = resp.data;
+                  $scope.combinedStatesTerritories = $scope.states.concat(
+                    $scope.territories
+                  );
+                },
+                function () {
+                  $scope.combinedStatesTerritories = $scope.states;
+                }
+              );
+            },
+            function () {
+              $scope.combinedStatesTerritories = [];
+            }
+          );
+
+          $http.get("governors.json").then(
+            function (response) {
+              $scope.governors = response.data;
+              if (!$scope.governors || $scope.governors.length === 0) {
+                console.log("No governors available");
               }
             },
             function (error) {
-              $scope.states = [];
+              $scope.governors = [];
+            }
+          );
+
+          $http.get("capitals.json").then(
+            function (response) {
+              $scope.capitals = response.data;
+              if (!$scope.capitals || $scope.capitals.length === 0) {
+                console.log("No capitals available");
+              }
+            },
+            function (error) {
+              $scope.capitals = [];
+            }
+          );
+
+          $http.get("members.json").then(
+            function (response) {
+              $scope.congressByState = response.data;
+              if (
+                !$scope.congressByState ||
+                $scope.congressByState.length === 0
+              ) {
+                console.log("No congress data available");
+              }
+            },
+            function (error) {
+              $scope.congressByState = [];
+              console.log("Error loading members.json");
             }
           );
 
@@ -442,9 +445,9 @@
           function startFlashcards() {
             //clear this.
             /*      $scope.questions = $scope.questions.filter(function (q) {
-              return q.requiresState === true;
-            });
-            $scope.totalQuestions = $scope.questions.length; */
+                      return q.requiresState === true;
+                    });
+                    $scope.totalQuestions = $scope.questions.length; */
             //clear this.
             $scope.flashCardQuestions = shuffle($scope.questions).slice(
               0,
@@ -458,38 +461,100 @@
 
           function loadQuestion() {
             if ($scope.currentIndex < $scope.flashCardQuestions.length) {
-              $scope.selection.selectedState = "-";
               $scope.requiresAdditionalInput = false;
               $scope.currentQuestion =
                 $scope.flashCardQuestions[$scope.currentIndex];
               $scope.selectedOptions = [];
               $scope.showAnswers = false;
-              // Prepare options
-              var opts = $scope.currentQuestion.answers.slice();
-              // Remove duplicates
-              $scope.currentOptions = shuffle(Array.from(new Set(opts)));
 
-              var msg = $scope.currentQuestion.question;
-
-              if ($scope.readOutEnabled) {
-                $timeout(function () {
-                  speak(msg);
-                }, 100);
+              var opts = [];
+              if ($scope.currentQuestion.requiresState) {
+                // Load state-specific data if needed
+                var currentStateData = null;
+                if (Array.isArray($scope.congressByState)) {
+                  currentStateData = $scope.congressByState.find(function (
+                    member
+                  ) {
+                    return member.statecode === $scope.selection.selectedState;
+                  });
+                } else if (
+                  $scope.congressByState &&
+                  typeof $scope.congressByState === "object"
+                ) {
+                  currentStateData =
+                    $scope.congressByState[$scope.selection.selectedState];
+                }
+                if (
+                  $scope.currentQuestion.chamber &&
+                  $scope.currentQuestion.chamber === "Senate" &&
+                  currentStateData
+                ) {
+                  if (currentStateData.senators) {
+                    opts = currentStateData.senators;
+                  } else {
+                    opts = ["No data found for this state."];
+                  }
+                } else if (
+                  $scope.currentQuestion.chamber &&
+                  $scope.currentQuestion.chamber ===
+                    "House of Representatives" &&
+                  currentStateData
+                ) {
+                  if (currentStateData.representatives) {
+                    opts = currentStateData.representatives;
+                  } else {
+                    opts = ["No data found for this state."];
+                  }
+                } else if (
+                  $scope.currentQuestion.chamber &&
+                  $scope.currentQuestion.chamber === "Governor"
+                ) {
+                  var governorData = {};
+                  governorData = $scope.governors.find(function (g) {
+                    return g.statecode === $scope.selection.selectedState;
+                  });
+                  if (governorData) {
+                    opts = [governorData.governorsname];
+                  } else {
+                    opts = ["No data found for this state."];
+                  }
+                } else if (
+                  $scope.currentQuestion.chamber &&
+                  $scope.currentQuestion.chamber === "Capital"
+                ) {
+                  var capitalData = $scope.capitals.find(function (c) {
+                    return c.abbreviation === $scope.selection.selectedState;
+                  });
+                  if (capitalData) {
+                    opts = [capitalData.capitalCity];
+                  } else {
+                    opts = ["No data found for this state."];
+                  }
+                }
+              } else {
+                // Prepare options
+                opts = $scope.currentQuestion.answers.slice();
               }
+            }
+            // Remove duplicates
+            $scope.currentOptions = shuffle(Array.from(new Set(opts)));
+            var msg = $scope.currentQuestion.question;
+            if ($scope.readOutEnabled) {
+              $timeout(function () {
+                speak(msg);
+              }, 100);
             } else {
               $scope.flashCardsFinished = true;
             }
           }
 
           $scope.showAnswersFn = function () {
-            $scope.selection.selectedState = "-";
+            $scope.showAnswers = true;
             if (
-              !$scope.currentQuestion.requiresState &&
               $scope.readOutEnabled &&
               $scope.currentOptions &&
               $scope.currentOptions.length
             ) {
-              $scope.showAnswers = true;
               var msg = "";
               if ($scope.currentOptions.length > 1) {
                 msg =
@@ -502,14 +567,6 @@
                 answersText +=
                   ". Disclaimer - " + $scope.currentQuestion.disclaimer + ". ";
               speak(msg + answersText);
-            } else {
-              $scope.showAnswers = false;
-              $scope.requiresAdditionalInput = true;
-              if ($scope.readOutEnabled) {
-                $timeout(function () {
-                  speak("Please select your state.");
-                }, 200);
-              }
             }
           };
 
@@ -521,6 +578,138 @@
               $scope.flashCardsFinished = true;
             }
           };
+
+          function getCongressMembers() {
+            if (
+              $scope.congressDataLoading ||
+              Object.keys($scope.congressByState).length > 0
+            ) {
+              return; // Data is loading or already loaded
+            }
+            $scope.congressDataLoading = true;
+            console.log("Starting to fetch all congressional members...");
+
+            var allMembers = [];
+
+            function fetchPage(url) {
+              $http.get(url).then(
+                function (response) {
+                  var apiResponse = response.data;
+                  if (apiResponse.members) {
+                    allMembers.push.apply(allMembers, apiResponse.members);
+                  }
+                  // The 'next' URL from the API is a complete URL. Use it directly.
+                  if (apiResponse.pagination && apiResponse.pagination.next) {
+                    $timeout(function () {
+                      fetchPage(
+                        apiResponse.pagination.next + "&api_key=" + API_KEY
+                      );
+                    }, 200);
+                  } else {
+                    console.log(
+                      "Finished fetching. Total members found: " +
+                        allMembers.length
+                    );
+                    processCongressData(allMembers);
+                    $scope.congressDataLoading = false;
+                  }
+                },
+                function (error) {
+                  console.error(
+                    "Error fetching congress data from API:",
+                    error
+                  );
+                  $scope.congressDataLoading = false;
+                }
+              );
+            }
+            // Start fetching from the base URL
+            $scope.congressurl = $scope.congressurl.replace(
+              "{API_KEY}",
+              API_KEY
+            );
+            fetchPage($scope.congressurl);
+          }
+
+          function processCongressData(allMembers) {
+            // Create sets and maps for efficient lookups.
+            // We only care about the 50 states, so we use $scope.states and ignore territories.
+            var allStates = [];
+            $scope.states.forEach(function (state) {
+              allStates.push({
+                name: state.name,
+                abbreviation: state.abbreviation,
+              });
+            });
+            $scope.territories.forEach(function (territory) {
+              allStates.push({
+                name: territory.name,
+                abbreviation: territory.abbreviation,
+              });
+            });
+            var stateMap = new Map();
+            var stateCodeMap = new Map();
+            allStates.forEach(function (state) {
+              stateMap.set(state.abbreviation, state.name);
+              stateCodeMap.set(state.name, state.abbreviation);
+            });
+            var stateCodes = Array.from(stateMap.keys());
+
+            var processedData = [];
+            stateCodes.forEach(function (stateCode) {
+              if (stateCode !== "-") {
+                processedData.push({
+                  statename: stateMap.get(stateCode),
+                  statecode: stateCode,
+                  senators: [],
+                  representatives: [],
+                });
+              }
+            });
+
+            allMembers.forEach(function (member) {
+              if (!member || !member.terms || !member.terms.item) {
+                console.log("member terms not found!", member);
+                return;
+              }
+              var currentTerm = null;
+              member.terms.item.forEach(function (term) {
+                if (
+                  !term.endYear ||
+                  (term.endYear && term.endYear > new Date().getFullYear())
+                ) {
+                  currentTerm = term;
+                }
+              });
+
+              if (!currentTerm) {
+                console.log(
+                  "Skipping member without valid state or term info:",
+                  member.name
+                );
+                return; // Skip territories or members without term info
+              }
+              var stateCode = stateCodeMap.get(member.state);
+              if (!stateCode) {
+                console.log("cannonot locate statecode for " + member.state);
+              }
+              currentData = processedData.find(function (d) {
+                return d.statecode === stateCode;
+              });
+              if (!currentData) {
+                console.log("Cannot locate the state" + member.state);
+              }
+              if (currentTerm.chamber === "Senate") {
+                currentData.senators.push(member.name);
+              } else if (currentTerm.chamber === "House of Representatives") {
+                currentData.representatives.push(member.name);
+              }
+            });
+
+            $scope.congressByState = processedData;
+            console.log($scope.congressByState);
+            console.log("Congress data processed and ready.");
+          }
         });
     </script>
     <script>

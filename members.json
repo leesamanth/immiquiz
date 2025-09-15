@@ -1,0 +1,783 @@
+[
+  {
+    "statename": "Alabama",
+    "statecode": "AL",
+    "senators": ["Tuberville, Tommy", "Britt, Katie Boyd"],
+    "representatives": [
+      "Figures, Shomari",
+      "Strong, Dale W.",
+      "Moore, Barry",
+      "Palmer, Gary J.",
+      "Sewell, Terri A.",
+      "Aderholt, Robert B.",
+      "Rogers, Mike D."
+    ]
+  },
+  {
+    "statename": "Alaska",
+    "statecode": "AK",
+    "senators": ["Sullivan, Dan", "Murkowski, Lisa"],
+    "representatives": ["Begich, Nicholas J."]
+  },
+  {
+    "statename": "Arizona",
+    "statecode": "AZ",
+    "senators": ["Kelly, Mark", "Gallego, Ruben"],
+    "representatives": [
+      "Hamadeh, Abraham J.",
+      "Ansari, Yassamin",
+      "Crane, Elijah",
+      "Ciscomani, Juan",
+      "Stanton, Greg",
+      "Biggs, Andy",
+      "Schweikert, David",
+      "Gosar, Paul A."
+    ]
+  },
+  {
+    "statename": "Arkansas",
+    "statecode": "AR",
+    "senators": ["Cotton, Tom", "Boozman, John"],
+    "representatives": [
+      "Westerman, Bruce",
+      "Hill, J. French",
+      "Womack, Steve",
+      "Crawford, Eric A. \"Rick\""
+    ]
+  },
+  {
+    "statename": "California",
+    "statecode": "CA",
+    "senators": ["Schiff, Adam B.", "Padilla, Alex"],
+    "representatives": [
+      "Jacobs, Sara",
+      "Levin, Mike",
+      "Peters, Scott H.",
+      "Vargas, Juan",
+      "Issa, Darrell",
+      "Whitesides, George",
+      "Tran, Derek",
+      "Rivas, Luz M.",
+      "Min, Dave",
+      "Friedman, Laura",
+      "Fong, Vince",
+      "Kamlager-Dove, Sydney",
+      "Garcia, Robert",
+      "Obernolte, Jay",
+      "Kim, Young",
+      "Cisneros, Gilbert Ray",
+      "Gomez, Jimmy",
+      "Correa, J. Luis",
+      "Barragán, Nanette Diaz",
+      "Carbajal, Salud O.",
+      "Panetta, Jimmy",
+      "Torres, Norma J.",
+      "Lieu, Ted",
+      "Aguilar, Pete",
+      "Takano, Mark",
+      "Ruiz, Raul",
+      "Brownley, Julia",
+      "Valadao, David G.",
+      "Chu, Judy",
+      "Sherman, Brad",
+      "Waters, Maxine",
+      "Costa, Jim",
+      "Sánchez, Linda T.",
+      "Calvert, Ken",
+      "Lofgren, Zoe",
+      "Simon, Lateefah",
+      "Liccardo, Sam T.",
+      "Gray, Adam",
+      "Mullin, Kevin",
+      "Kiley, Kevin",
+      "Harder, Josh",
+      "Khanna, Ro",
+      "DeSaulnier, Mark",
+      "Swalwell, Eric",
+      "Bera, Ami",
+      "Huffman, Jared",
+      "LaMalfa, Doug",
+      "Garamendi, John",
+      "McClintock, Tom",
+      "Matsui, Doris O.",
+      "Pelosi, Nancy",
+      "Thompson, Mike"
+    ]
+  },
+  {
+    "statename": "Colorado",
+    "statecode": "CO",
+    "senators": ["Hickenlooper, John W.", "Bennet, Michael F."],
+    "representatives": [
+      "Hurd, Jeff",
+      "Evans, Gabe",
+      "Crank, Jeff",
+      "Pettersen, Brittany",
+      "Boebert, Lauren",
+      "Crow, Jason",
+      "Neguse, Joe",
+      "DeGette, Diana"
+    ]
+  },
+  {
+    "statename": "Connecticut",
+    "statecode": "CT",
+    "senators": ["Murphy, Christopher", "Blumenthal, Richard"],
+    "representatives": [
+      "Hayes, Jahana",
+      "Courtney, Joe",
+      "Himes, James A.",
+      "Larson, John B.",
+      "DeLauro, Rosa L."
+    ]
+  },
+  {
+    "statename": "Delaware",
+    "statecode": "DE",
+    "senators": ["Coons, Christopher A.", "Blunt Rochester, Lisa"],
+    "representatives": ["McBride, Sarah"]
+  },
+  {
+    "statename": "Florida",
+    "statecode": "FL",
+    "senators": ["Scott, Rick", "Moody, Ashley"],
+    "representatives": [
+      "Moskowitz, Jared",
+      "Luna, Anna Paulina",
+      "Lee, Laurel M.",
+      "Cherfilus-McCormick, Sheila",
+      "Salazar, Maria Elvira",
+      "Gimenez, Carlos A.",
+      "Franklin, Scott",
+      "Donalds, Byron",
+      "Steube, W. Gregory",
+      "Mast, Brian J.",
+      "Frankel, Lois",
+      "Wilson, Frederica S.",
+      "Webster, Daniel",
+      "Buchanan, Vern",
+      "Castor, Kathy",
+      "Bilirakis, Gus M.",
+      "Wasserman Schultz, Debbie",
+      "Diaz-Balart, Mario",
+      "Patronis, Jimmy",
+      "Fine, Randy",
+      "Haridopolos, Mike",
+      "Mills, Cory",
+      "Frost, Maxwell",
+      "Bean, Aaron",
+      "Cammack, Kat",
+      "Soto, Darren",
+      "Rutherford, John H.",
+      "Dunn, Neal P."
+    ]
+  },
+  {
+    "statename": "Georgia",
+    "statecode": "GA",
+    "senators": ["Warnock, Raphael G.", "Ossoff, Jon"],
+    "representatives": [
+      "Greene, Marjorie Taylor",
+      "Scott, David",
+      "Jack, Brian",
+      "McCormick, Richard",
+      "Collins, Mike",
+      "Williams, Nikema",
+      "Clyde, Andrew S.",
+      "McBath, Lucy",
+      "Allen, Rick W.",
+      "Loudermilk, Barry",
+      "Carter, Earl L. \"Buddy\"",
+      "Scott, Austin",
+      "Johnson, Henry C. \"Hank\"",
+      "Bishop, Sanford D."
+    ]
+  },
+  {
+    "statename": "Hawaii",
+    "statecode": "HI",
+    "senators": ["Schatz, Brian", "Hirono, Mazie K."],
+    "representatives": ["Tokuda, Jill N.", "Case, Ed"]
+  },
+  {
+    "statename": "Idaho",
+    "statecode": "ID",
+    "senators": ["Risch, James E.", "Crapo, Mike"],
+    "representatives": ["Fulcher, Russ", "Simpson, Michael K."]
+  },
+  {
+    "statename": "Illinois",
+    "statecode": "IL",
+    "senators": ["Duckworth, Tammy", "Durbin, Richard J."],
+    "representatives": [
+      "Sorensen, Eric",
+      "Ramirez, Delia C.",
+      "Jackson, Jonathan L.",
+      "Budzinski, Nikki",
+      "Miller, Mary E.",
+      "Underwood, Lauren",
+      "Casten, Sean",
+      "García, Jesús G. \"Chuy\"",
+      "Krishnamoorthi, Raja",
+      "LaHood, Darin",
+      "Bost, Mike",
+      "Schneider, Bradley Scott",
+      "Quigley, Mike",
+      "Foster, Bill",
+      "Kelly, Robin L.",
+      "Schakowsky, Janice D.",
+      "Davis, Danny K."
+    ]
+  },
+  {
+    "statename": "Indiana",
+    "statecode": "IN",
+    "senators": ["Young, Todd", "Banks, Jim"],
+    "representatives": [
+      "Shreve, Jefferson",
+      "Messmer, Mark B.",
+      "Houchin, Erin",
+      "Spartz, Victoria",
+      "Baird, James R.",
+      "Stutzman, Marlin A.",
+      "Carson, André",
+      "Yakym, Rudy",
+      "Mrvan, Frank J."
+    ]
+  },
+  {
+    "statename": "Iowa",
+    "statecode": "IA",
+    "senators": ["Grassley, Chuck", "Ernst, Joni"],
+    "representatives": [
+      "Nunn, Zachary",
+      "Miller-Meeks, Mariannette",
+      "Hinson, Ashley",
+      "Feenstra, Randy"
+    ]
+  },
+  {
+    "statename": "Kansas",
+    "statecode": "KS",
+    "senators": ["Marshall, Roger", "Moran, Jerry"],
+    "representatives": [
+      "Schmidt, Derek",
+      "Mann, Tracey",
+      "Davids, Sharice",
+      "Estes, Ron"
+    ]
+  },
+  {
+    "statename": "Kentucky",
+    "statecode": "KY",
+    "senators": ["Paul, Rand", "McConnell, Mitch"],
+    "representatives": [
+      "McGarvey, Morgan",
+      "Comer, James",
+      "Barr, Andy",
+      "Massie, Thomas",
+      "Guthrie, Brett",
+      "Rogers, Harold"
+    ]
+  },
+  {
+    "statename": "Louisiana",
+    "statecode": "LA",
+    "senators": ["Kennedy, John", "Cassidy, Bill"],
+    "representatives": [
+      "Carter, Troy A.",
+      "Letlow, Julia",
+      "Johnson, Mike",
+      "Higgins, Clay",
+      "Scalise, Steve",
+      "Fields, Cleo"
+    ]
+  },
+  {
+    "statename": "Maine",
+    "statecode": "ME",
+    "senators": ["King, Angus S., Jr.", "Collins, Susan M."],
+    "representatives": ["Golden, Jared F.", "Pingree, Chellie"]
+  },
+  {
+    "statename": "Maryland",
+    "statecode": "MD",
+    "senators": ["Van Hollen, Chris", "Alsobrooks, Angela D."],
+    "representatives": [
+      "Olszewski, Johnny",
+      "McClain Delaney, April",
+      "Elfreth, Sarah",
+      "Ivey, Glenn",
+      "Raskin, Jamie",
+      "Harris, Andy",
+      "Mfume, Kweisi",
+      "Hoyer, Steny H."
+    ]
+  },
+  {
+    "statename": "Massachusetts",
+    "statecode": "MA",
+    "senators": ["Warren, Elizabeth", "Markey, Edward J."],
+    "representatives": [
+      "Keating, William R.",
+      "Lynch, Stephen F.",
+      "Auchincloss, Jake",
+      "Pressley, Ayanna",
+      "Trahan, Lori",
+      "Moulton, Seth",
+      "Clark, Katherine M.",
+      "McGovern, James P.",
+      "Neal, Richard E."
+    ]
+  },
+  {
+    "statename": "Michigan",
+    "statecode": "MI",
+    "senators": ["Slotkin, Elissa", "Peters, Gary C."],
+    "representatives": [
+      "McDonald Rivet, Kristen",
+      "Barrett, Tom",
+      "Thanedar, Shri",
+      "Scholten, Hillary J.",
+      "James, John",
+      "McClain, Lisa C.",
+      "Tlaib, Rashida",
+      "Stevens, Haley M.",
+      "Bergman, Jack",
+      "Dingell, Debbie",
+      "Moolenaar, John R.",
+      "Huizenga, Bill",
+      "Walberg, Tim"
+    ]
+  },
+  {
+    "statename": "Minnesota",
+    "statecode": "MN",
+    "senators": ["Smith, Tina", "Klobuchar, Amy"],
+    "representatives": [
+      "Fischbach, Michelle",
+      "Stauber, Pete",
+      "Emmer, Tom",
+      "Morrison, Kelly",
+      "Finstad, Brad",
+      "Omar, Ilhan",
+      "Craig, Angie",
+      "McCollum, Betty"
+    ]
+  },
+  {
+    "statename": "Mississippi",
+    "statecode": "MS",
+    "senators": ["Wicker, Roger F.", "Hyde-Smith, Cindy"],
+    "representatives": [
+      "Ezell, Mike",
+      "Guest, Michael",
+      "Kelly, Trent",
+      "Thompson, Bennie G."
+    ]
+  },
+  {
+    "statename": "Missouri",
+    "statecode": "MO",
+    "senators": ["Schmitt, Eric", "Hawley, Josh"],
+    "representatives": [
+      "Onder, Robert F.",
+      "Bell, Wesley",
+      "Burlison, Eric",
+      "Alford, Mark",
+      "Wagner, Ann",
+      "Smith, Jason",
+      "Cleaver, Emanuel",
+      "Graves, Sam"
+    ]
+  },
+  {
+    "statename": "Montana",
+    "statecode": "MT",
+    "senators": ["Sheehy, Tim", "Daines, Steve"],
+    "representatives": ["Downing, Troy", "Zinke, Ryan K."]
+  },
+  {
+    "statename": "Nebraska",
+    "statecode": "NE",
+    "senators": ["Ricketts, Pete", "Fischer, Deb"],
+    "representatives": ["Flood, Mike", "Bacon, Don", "Smith, Adrian"]
+  },
+  {
+    "statename": "Nevada",
+    "statecode": "NV",
+    "senators": ["Rosen, Jacky", "Cortez Masto, Catherine"],
+    "representatives": [
+      "Lee, Susie",
+      "Horsford, Steven",
+      "Amodei, Mark E.",
+      "Titus, Dina"
+    ]
+  },
+  {
+    "statename": "New Hampshire",
+    "statecode": "NH",
+    "senators": ["Shaheen, Jeanne", "Hassan, Margaret Wood"],
+    "representatives": ["Goodlander, Maggie", "Pappas, Chris"]
+  },
+  {
+    "statename": "New Jersey",
+    "statecode": "NJ",
+    "senators": ["Kim, Andy", "Booker, Cory A."],
+    "representatives": [
+      "Pou, Nellie",
+      "Conaway, Herbert C.",
+      "McIver, LaMonica",
+      "Menendez, Robert",
+      "Kean, Thomas H.",
+      "Sherrill, Mikie",
+      "Van Drew, Jefferson",
+      "Gottheimer, Josh",
+      "Watson Coleman, Bonnie",
+      "Norcross, Donald",
+      "Pallone, Frank",
+      "Smith, Christopher H."
+    ]
+  },
+  {
+    "statename": "New Mexico",
+    "statecode": "NM",
+    "senators": ["Luján, Ben Ray", "Heinrich, Martin"],
+    "representatives": [
+      "Vasquez, Gabe",
+      "Stansbury, Melanie A.",
+      "Leger Fernandez, Teresa"
+    ]
+  },
+  {
+    "statename": "New York",
+    "statecode": "NY",
+    "senators": ["Schumer, Charles E.", "Gillibrand, Kirsten E."],
+    "representatives": [
+      "Riley, Josh",
+      "Mannion, John W.",
+      "Latimer, George",
+      "Gillen, Laura",
+      "Kennedy, Timothy M.",
+      "Lawler, Michael",
+      "Langworthy, Nicholas A.",
+      "Goldman, Daniel S.",
+      "Ryan, Patrick",
+      "Torres, Ritchie",
+      "Malliotakis, Nicole",
+      "Ocasio-Cortez, Alexandria",
+      "Morelle, Joseph D.",
+      "Tenney, Claudia",
+      "Espaillat, Adriano",
+      "Suozzi, Thomas R.",
+      "Stefanik, Elise M.",
+      "Jeffries, Hakeem S.",
+      "Meng, Grace",
+      "Clarke, Yvette D.",
+      "Tonko, Paul",
+      "Meeks, Gregory W.",
+      "Velázquez, Nydia M.",
+      "Nadler, Jerrold",
+      "LaLota, Nick",
+      "Garbarino, Andrew R."
+    ]
+  },
+  {
+    "statename": "North Carolina",
+    "statecode": "NC",
+    "senators": ["Tillis, Thomas", "Budd, Ted"],
+    "representatives": [
+      "Moore, Tim",
+      "Knott, Brad",
+      "Adams, Alma S.",
+      "McDowell, Addison P.",
+      "Harris, Mark",
+      "Harrigan, Pat",
+      "Foushee, Valerie P.",
+      "Edwards, Chuck",
+      "Davis, Donald G.",
+      "Ross, Deborah K.",
+      "Murphy, Gregory F.",
+      "Rouzer, David",
+      "Hudson, Richard",
+      "Foxx, Virginia"
+    ]
+  },
+  {
+    "statename": "North Dakota",
+    "statecode": "ND",
+    "senators": ["Hoeven, John", "Cramer, Kevin"],
+    "representatives": ["Fedorchak, Julie"]
+  },
+  {
+    "statename": "Ohio",
+    "statecode": "OH",
+    "senators": ["Moreno, Bernie", "Husted, Jon"],
+    "representatives": [
+      "Rulli, Michael A.",
+      "Sykes, Emilia Strong",
+      "Miller, Max L.",
+      "Carey, Mike",
+      "Brown, Shontel M.",
+      "Balderson, Troy",
+      "Davidson, Warren",
+      "Joyce, David P.",
+      "Turner, Michael R.",
+      "Kaptur, Marcy",
+      "Taylor, David J.",
+      "Landsman, Greg",
+      "Beatty, Joyce",
+      "Latta, Robert E.",
+      "Jordan, Jim"
+    ]
+  },
+  {
+    "statename": "Oklahoma",
+    "statecode": "OK",
+    "senators": ["Mullin, Markwayne", "Lankford, James"],
+    "representatives": [
+      "Brecheen, Josh",
+      "Bice, Stephanie I.",
+      "Hern, Kevin",
+      "Lucas, Frank D.",
+      "Cole, Tom"
+    ]
+  },
+  {
+    "statename": "Oregon",
+    "statecode": "OR",
+    "senators": ["Wyden, Ron", "Merkley, Jeff"],
+    "representatives": [
+      "Dexter, Maxine",
+      "Bynum, Janelle S.",
+      "Salinas, Andrea",
+      "Hoyle, Val T.",
+      "Bentz, Cliff",
+      "Bonamici, Suzanne"
+    ]
+  },
+  {
+    "statename": "Pennsylvania",
+    "statecode": "PA",
+    "senators": ["McCormick, David", "Fetterman, John"],
+    "representatives": [
+      "Bresnahan, Robert P.",
+      "Lee, Summer L.",
+      "Deluzio, Christopher R.",
+      "Reschenthaler, Guy",
+      "Joyce, John",
+      "Meuser, Daniel",
+      "Smucker, Lloyd",
+      "Perry, Scott",
+      "Kelly, Mike",
+      "Thompson, Glenn",
+      "Mackenzie, Ryan",
+      "Houlahan, Chrissy",
+      "Dean, Madeleine",
+      "Scanlon, Mary Gay",
+      "Fitzpatrick, Brian K.",
+      "Evans, Dwight",
+      "Boyle, Brendan F."
+    ]
+  },
+  {
+    "statename": "Rhode Island",
+    "statecode": "RI",
+    "senators": ["Whitehouse, Sheldon", "Reed, Jack"],
+    "representatives": ["Amo, Gabe", "Magaziner, Seth"]
+  },
+  {
+    "statename": "South Carolina",
+    "statecode": "SC",
+    "senators": ["Scott, Tim", "Graham, Lindsey"],
+    "representatives": [
+      "Biggs, Sheri",
+      "Fry, Russell",
+      "Mace, Nancy",
+      "Timmons, William R.",
+      "Norman, Ralph",
+      "Wilson, Joe",
+      "Clyburn, James E."
+    ]
+  },
+  {
+    "statename": "South Dakota",
+    "statecode": "SD",
+    "senators": ["Thune, John", "Rounds, Mike"],
+    "representatives": ["Johnson, Dusty"]
+  },
+  {
+    "statename": "Tennessee",
+    "statecode": "TN",
+    "senators": ["Hagerty, Bill", "Blackburn, Marsha"],
+    "representatives": [
+      "Ogles, Andrew",
+      "Harshbarger, Diana",
+      "Rose, John W.",
+      "Burchett, Tim",
+      "Kustoff, David",
+      "DesJarlais, Scott",
+      "Fleischmann, Charles J. \"Chuck\"",
+      "Cohen, Steve"
+    ]
+  },
+  {
+    "statename": "Texas",
+    "statecode": "TX",
+    "senators": ["Cruz, Ted", "Cornyn, John"],
+    "representatives": [
+      "Johnson, Julie",
+      "Hunt, Wesley",
+      "Casar, Greg",
+      "Gonzalez, Vicente",
+      "Babin, Brian",
+      "Veasey, Marc A.",
+      "Doggett, Lloyd",
+      "Gill, Brandon",
+      "Goldman, Craig A.",
+      "Self, Keith",
+      "Luttrell, Morgan",
+      "De La Cruz, Monica",
+      "Crockett, Jasmine",
+      "Ellzey, Jake",
+      "Van Duyne, Beth",
+      "Pfluger, August",
+      "Nehls, Troy E.",
+      "Jackson, Ronny",
+      "Gonzales, Tony",
+      "Fallon, Pat",
+      "Garcia, Sylvia R.",
+      "Roy, Chip",
+      "Escobar, Veronica",
+      "Fletcher, Lizzie",
+      "Gooden, Lance",
+      "Crenshaw, Dan",
+      "Cloud, Michael",
+      "Arrington, Jodey C.",
+      "Williams, Roger",
+      "Castro, Joaquin",
+      "Weber, Randy K. Sr.",
+      "Sessions, Pete",
+      "Cuellar, Henry",
+      "McCaul, Michael T.",
+      "Green, Al",
+      "Carter, John R.",
+      "Moran, Nathaniel"
+    ]
+  },
+  {
+    "statename": "Utah",
+    "statecode": "UT",
+    "senators": ["Lee, Mike", "Curtis, John R."],
+    "representatives": [
+      "Kennedy, Mike",
+      "Maloy, Celeste",
+      "Owens, Burgess",
+      "Moore, Blake D."
+    ]
+  },
+  {
+    "statename": "Vermont",
+    "statecode": "VT",
+    "senators": ["Welch, Peter", "Sanders, Bernard"],
+    "representatives": ["Balint, Becca"]
+  },
+  {
+    "statename": "Virginia",
+    "statecode": "VA",
+    "senators": ["Warner, Mark R.", "Kaine, Tim"],
+    "representatives": [
+      "Walkinshaw, James R.",
+      "Vindman, Eugene Simon",
+      "Subramanyam, Suhas",
+      "McGuire, John J.",
+      "McClellan, Jennifer L.",
+      "Kiggans, Jennifer A.",
+      "Cline, Ben",
+      "Beyer, Donald S.",
+      "Wittman, Robert J.",
+      "Griffith, H. Morgan",
+      "Scott, Robert C. \"Bobby\""
+    ]
+  },
+  {
+    "statename": "Washington",
+    "statecode": "WA",
+    "senators": ["Murray, Patty", "Cantwell, Maria"],
+    "representatives": [
+      "Randall, Emily",
+      "Strickland, Marilyn",
+      "Schrier, Kim",
+      "Jayapal, Pramila",
+      "Smith, Adam",
+      "Baumgartner, Michael",
+      "Perez, Marie Gluesenkamp",
+      "Newhouse, Dan",
+      "DelBene, Suzan K.",
+      "Larsen, Rick"
+    ]
+  },
+  {
+    "statename": "West Virginia",
+    "statecode": "WV",
+    "senators": ["Justice, James C.", "Capito, Shelley Moore"],
+    "representatives": ["Moore, Riley M.", "Miller, Carol D."]
+  },
+  {
+    "statename": "Wisconsin",
+    "statecode": "WI",
+    "senators": ["Johnson, Ron", "Baldwin, Tammy"],
+    "representatives": [
+      "Wied, Tony",
+      "Van Orden, Derrick",
+      "Fitzgerald, Scott",
+      "Tiffany, Thomas P.",
+      "Steil, Bryan",
+      "Grothman, Glenn",
+      "Pocan, Mark",
+      "Moore, Gwen"
+    ]
+  },
+  {
+    "statename": "Wyoming",
+    "statecode": "WY",
+    "senators": ["Lummis, Cynthia M.", "Barrasso, John"],
+    "representatives": ["Hageman, Harriet M."]
+  },
+  {
+    "statename": "American Samoa",
+    "statecode": "AS",
+    "senators": [],
+    "representatives": ["Radewagen, Aumua Amata Coleman"]
+  },
+  {
+    "statename": "Guam",
+    "statecode": "GU",
+    "senators": [],
+    "representatives": ["Moylan, James C."]
+  },
+  {
+    "statename": "Northern Mariana Islands",
+    "statecode": "MP",
+    "senators": [],
+    "representatives": ["King-Hinds, Kimberlyn"]
+  },
+  {
+    "statename": "Puerto Rico",
+    "statecode": "PR",
+    "senators": [],
+    "representatives": ["Hernández, Pablo Jose"]
+  },
+  {
+    "statename": "Virgin Islands",
+    "statecode": "VI",
+    "senators": [],
+    "representatives": ["Plaskett, Stacey E."]
+  },
+  {
+    "statename": "District of Columbia",
+    "statecode": "DC",
+    "senators": [],
+    "representatives": ["Norton, Eleanor Holmes"]
+  }
+]
