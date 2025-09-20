@@ -60,6 +60,17 @@
         margin-bottom: 2rem;
         text-align: center;
       }
+      .quiz-question {
+        background-color: #0056b3;
+        width: 100%;
+        min-height: 86px;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        font-weight: bold;
+        padding: 30px 60px;
+        border-bottom-right-radius: 20px;
+        border-top-left-radius: 20px;
+      }
       .btn {
         background: #0056b3;
         color: #fafafa;
@@ -71,16 +82,53 @@
         transition: background 0.2s;
         margin: 0.5rem;
       }
+
+      .ans-btn {
+        -webkit-appearance: none;
+        border: solid 2px rgb(161, 161, 161);
+        background-color: transparent;
+        border-radius: 8px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        transition: 0.5s;
+      }
+
+      .circle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #fff;
+        border: 2px solid #666;
+        color: #040404;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-right: 10px;
+      }
+
       .answer-btn {
+        border: solid 2px rgb(161, 161, 161);
+        background-color: transparent;
+        border-radius: 8px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.5s;
         background: #fafafa;
         color: #020202;
-        border: 1px solid #0056b3;
-        border-radius: 8px;
         padding: 0.5rem 1.5rem;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background 0.2s;
+        font-size: 1.4rem;
+        font-weight: 900;
         margin: 0.5rem;
+        text-align: left;
       }
       .answer-btn.selected {
         background: #00b356;
@@ -193,16 +241,86 @@
                   type="checkbox"
                   ng-model="readOutEnabled"
                   ng-change="onReadOutToggle()"
+                  class="accent-blue-600"
                 />
-                <span class="text-sm">Read question out loud</span>
+                <span class="inline-flex items-center">
+                  <span ng-if="readOutEnabled">
+                    <!-- Speaker On Icon -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-green-600 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5L6 9H2v6h4l5 4V5z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 12c0-1.657-1.343-3-3-3m0 6c1.657 0 3-1.343 3-3z"
+                      />
+                    </svg>
+                  </span>
+                  <span ng-if="!readOutEnabled">
+                    <!-- Speaker Off Icon -->
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-gray-400 mr-1"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5L6 9H2v6h4l5 4V5z"
+                      />
+                      <line
+                        x1="19"
+                        y1="5"
+                        x2="5"
+                        y2="19"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </span>
+                  <span class="text-sm"
+                    >{{ readOutEnabled ? 'Unmute' : 'Mute' }}</span
+                  >
+                </span>
               </label>
             </div>
-            <div class="card" ng-if="!quizFinished">
+            <div class="card" ng-if="!quizFinished && !selection.selectedState">
+              <h2 class="text-2xl font-bold mb-4">
+                Select Your State or Territory
+              </h2>
+              <div class="flex justify-center">
+                <select
+                  title="Select State or Territory"
+                  class="border rounded px-3 py-2 w-64"
+                  ng-model="selection.selectedState"
+                  ng-options="st as st.name for st in combinedStatesTerritories track by st.abbreviation"
+                >
+                  <option value="">-- Select State or Territory --</option>
+                </select>
+              </div>
+            </div>
+            <div class="card" ng-if="!quizFinished && selection.selectedState">
               <div ng-if="currentQuestion">
                 <h2 class="text-xl font-bold mb-2">
                   Question {{ currentIndex + 1 }} of {{ totalQuestions }}
                 </h2>
-                <div class="mb-2">{{ currentQuestion.question }}</div>
+                <div class="mb-2 quiz-question">
+                  {{ currentQuestion.question }}
+                </div>
                 <div class="mb-4 text-sm text-gray-600">
                   Please read your answer outloud
                 </div>
@@ -214,7 +332,9 @@
                   Select Answer(s)
                 </button>
                 <form ng-if="showAnswers">
-                  <div class="flex flex-col items-center mb-4">
+                  <div
+                    class="flex flex-col items-center mb-4 w-full max-w-full"
+                  >
                     <button
                       type="button"
                       ng-repeat="option in currentOptions"
@@ -224,7 +344,8 @@
                     }"
                       ng-click="toggleSelect(option)"
                     >
-                      {{ option }}
+                      <span class="circle">{{ alphabet[$index] }}</span> {{
+                      option }}
                     </button>
                   </div>
                   <button type="button" class="btn" ng-click="submitAnswer()">
@@ -313,6 +434,16 @@
           $scope.answeredQuestions = [];
           $scope.readOutEnabled = false;
           $scope.totalQuestions = 10;
+          $scope.states = [];
+          $scope.territories = [];
+          $scope.combinedStatesTerritories = [];
+          $scope.governors = [];
+          $scope.capitals = [];
+          $scope.congressByState = [];
+          $scope.selection = {
+            selectedState: null,
+          };
+          $scope.alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
           $scope.onReadOutToggle = function () {
             if (
@@ -348,6 +479,67 @@
               $scope.questions = [];
               $scope.quizFinished = true;
               alert("Error loading questions.json");
+            }
+          );
+
+          // Load states and territories, then combine
+          $http.get("states.json").then(
+            function (response) {
+              $scope.states = response.data;
+              $http.get("territories.json").then(
+                function (resp) {
+                  $scope.territories = resp.data;
+                  $scope.combinedStatesTerritories = $scope.states.concat(
+                    $scope.territories
+                  );
+                },
+                function () {
+                  $scope.combinedStatesTerritories = $scope.states;
+                }
+              );
+            },
+            function () {
+              $scope.combinedStatesTerritories = [];
+            }
+          );
+
+          $http.get("governors.json").then(
+            function (response) {
+              $scope.governors = response.data;
+              if (!$scope.governors || $scope.governors.length === 0) {
+                console.log("No governors available");
+              }
+            },
+            function (error) {
+              $scope.governors = [];
+            }
+          );
+
+          $http.get("capitals.json").then(
+            function (response) {
+              $scope.capitals = response.data;
+              if (!$scope.capitals || $scope.capitals.length === 0) {
+                console.log("No capitals available");
+              }
+            },
+            function (error) {
+              $scope.capitals = [];
+            }
+          );
+
+          $http.get("members.json").then(
+            function (response) {
+              $scope.congressByState = response.data;
+              if (
+                !$scope.congressByState ||
+                $scope.congressByState.length === 0
+              ) {
+                console.log("No congress data available");
+              }
+            },
+            function (error) {
+              $scope.congressByState = [];
+              console.log("Error loading members.json");
             }
           );
 
@@ -398,6 +590,11 @@
               0,
               $scope.totalQuestions
             );
+            /*   var additional = $scope.questions.filter((q) => q.requiresState);
+            additional.forEach((q) => {
+              $scope.quizQuestions.push(q);
+            });
+            $scope.totalQuestions = $scope.quizQuestions.length; */
             //test case
             /*   var oneQuestion = $scope.quizQuestions.filter(
               (e) =>
@@ -420,19 +617,69 @@
             $scope.selectedOptions = [];
             // Combine answerOptions and answers
             var opts = [];
-            if (
-              $scope.currentQuestion &&
-              Array.isArray($scope.currentQuestion.answerOptions)
-            ) {
-              opts = $scope.currentQuestion.answerOptions.map(function (o) {
-                return o.answerText;
-              });
-            }
-            if (
-              $scope.currentQuestion &&
-              Array.isArray($scope.currentQuestion.answers)
-            ) {
-              opts = opts.concat($scope.currentQuestion.answers);
+            if (!$scope.currentQuestion.requiresState) {
+              if (
+                $scope.currentQuestion &&
+                Array.isArray($scope.currentQuestion.answerOptions)
+              ) {
+                opts = $scope.currentQuestion.answerOptions.map(function (o) {
+                  return o.answerText;
+                });
+              }
+              if (
+                $scope.currentQuestion &&
+                Array.isArray($scope.currentQuestion.answers)
+              ) {
+                opts = opts.concat($scope.currentQuestion.answers);
+              }
+            } else {
+              // if the question requires a state. get actual values based on chamber
+              if (
+                $scope.currentQuestion.chamber &&
+                $scope.selection.selectedState
+              ) {
+                if ($scope.currentQuestion.chamber === "Governor") {
+                  var gov = $scope.governors.find(
+                    (g) =>
+                      g.statecode ===
+                      $scope.selection.selectedState.abbreviation
+                  );
+                  console.log(gov);
+                  if (gov && gov.governorsname) opts.push(gov.governorsname);
+                } else if ($scope.currentQuestion.chamber === "Capital") {
+                  var cap = $scope.capitals.find(
+                    (c) =>
+                      c.abbreviation ===
+                      $scope.selection.selectedState.abbreviation
+                  );
+                  console.log(cap);
+                  if (cap && cap.capitalCity) opts.push(cap.capitalCity);
+                } else if ($scope.currentQuestion.chamber === "Senate") {
+                  console.log("Senate chamber");
+                  var stateData = $scope.congressByState.filter(
+                    (c) =>
+                      c.statecode ===
+                      $scope.selection.selectedState.abbreviation
+                  )[0];
+                  console.log(stateData);
+                  stateData.senators.forEach(function (m) {
+                    if (m) opts.push(m);
+                  });
+                } else if (
+                  $scope.currentQuestion.chamber === "House of Representatives"
+                ) {
+                  console.log("House chamber");
+                  var members = $scope.congressByState.filter(
+                    (c) =>
+                      c.statecode ===
+                      $scope.selection.selectedState.abbreviation
+                  )[0].representatives;
+                  console.log(members);
+                  members.forEach(function (m) {
+                    if (m) opts.push(m);
+                  });
+                }
+              }
             }
             // Remove duplicates
             $scope.currentOptions = shuffle(Array.from(new Set(opts)));
@@ -502,6 +749,42 @@
             var correct = $scope.currentQuestion.answers || [];
             var selected = $scope.selectedOptions;
 
+            if ($scope.currentQuestion.requiresState) {
+              correct = [];
+              if ($scope.currentQuestion.chamber === "Governor") {
+                var gov = $scope.governors.find(
+                  (g) =>
+                    g.statecode === $scope.selection.selectedState.abbreviation
+                );
+                if (gov && gov.governorsname) correct.push(gov.governorsname);
+              } else if ($scope.currentQuestion.chamber === "Capital") {
+                var cap = $scope.capitals.find(
+                  (c) =>
+                    c.abbreviation ===
+                    $scope.selection.selectedState.abbreviation
+                );
+                if (cap && cap.capitalCity) correct.push(cap.capitalCity);
+              } else if ($scope.currentQuestion.chamber === "Senate") {
+                var stateData = $scope.congressByState.filter(
+                  (c) =>
+                    c.statecode === $scope.selection.selectedState.abbreviation
+                )[0];
+                stateData.senators.forEach(function (m) {
+                  if (m) correct.push(m);
+                });
+              } else if (
+                $scope.currentQuestion.chamber === "House of Representatives"
+              ) {
+                var members = $scope.congressByState.filter(
+                  (c) =>
+                    c.statecode === $scope.selection.selectedState.abbreviation
+                )[0].representatives;
+                members.forEach(function (m) {
+                  if (m) correct.push(m);
+                });
+              }
+            }
+
             // Mark correct only if selectedOptions equal to scope.maxSelections and selectedOptions are all in correct answers
             var isCorrect =
               selected.length === $scope.maxSelections &&
@@ -510,10 +793,16 @@
               });
 
             if (isCorrect) $scope.score++;
+
             // Save answered question to aside
             var reviewAnswers = Array.isArray($scope.currentQuestion.answers)
               ? $scope.currentQuestion.answers.slice()
               : [];
+
+            if ($scope.currentQuestion.requiresState) {
+              reviewAnswers = correct.slice();
+            }
+
             $scope.answeredQuestions.push({
               index: $scope.currentIndex,
               question: $scope.currentQuestion,
